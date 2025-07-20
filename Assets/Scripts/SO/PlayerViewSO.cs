@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "PlayerViewSO", menuName = "Scriptable Objects/PlayerViewSO")]
 public class PlayerViewSO : ScriptableObject
@@ -7,11 +8,13 @@ public class PlayerViewSO : ScriptableObject
     [SerializeField] private string _name;
     [SerializeField] private Sprite _view;
     [SerializeField] private Sprite _background;
-    [SerializeField] private PlayerView _prefab;
+   // [SerializeField] private PlayerView _prefab;
+    [SerializeField] private Texture _viewImage;
 
     public int Price =>_price;
     public string Name => _name;
     public Sprite View => _view;
     public Sprite Background => _background;
-    public PlayerView Prefab => _prefab;
+   // public PlayerView Prefab => _prefab;
+    public Texture ViewImage => _viewImage;
 }

@@ -17,3 +17,4 @@ MonoBehaviour:
   _view: {fileID: 21300000, guid: d5ddf31c89d2374409b2e168bcc4319c, type: 3}
   _background: {fileID: 21300000, guid: 51dbb89cea4913046b5e9aecbb924cb3, type: 3}
   _prefab: {fileID: 2746192573153336942, guid: e1239aa9a93bbdf40b25aba665dffe7d, type: 3}
+  _viewImage: {fileID: 2800000, guid: 4591c11fb0e78834c974f1ab73abc323, type: 3}
