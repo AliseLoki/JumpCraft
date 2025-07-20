@@ -28,6 +28,8 @@ public class Player : MonoBehaviour
 
     public ShopView ShopView => _shopView;
 
+    public PlatformsController PlatformsController => _platformsController;
+
     private void OnDisable()
     {      
         _platformsController.PlatformHasSpawnedOnAxisX -= OnPlatformSpawned;

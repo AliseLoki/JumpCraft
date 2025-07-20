@@ -32,17 +32,25 @@ public class ObjectsPool : MonoBehaviour
         InitContainers();
     }
 
-    public Interactable GetPooledObject(List<Interactable> pool, Interactable prefab)
+    public Interactable GetPooledObject(List<Interactable> pool, Interactable prefab, Vector3 position)
     {
         for (int i = 0; i < _amountToPool; i++)
         {
-            if (!pool[i].gameObject.activeInHierarchy) return pool[i];
+            if (!pool[i].gameObject.activeInHierarchy)
+            {
+                Interactable obj = pool[i];
+                obj.transform.position = position;
+                obj.gameObject.SetActive(true);
+                return obj;
+            }
         }
 
         if (prefab as Platform)
         {
             var newPlatform = Create(pool, prefab);
-           // CreatePlatformView(newPlatform.transform);
+            newPlatform.gameObject.SetActive(true);
+            newPlatform.transform.position = position;
+            // CreatePlatformView(newPlatform.transform);
             return newPlatform;
         }
         else
@@ -73,7 +81,7 @@ public class ObjectsPool : MonoBehaviour
         {
             platform = Create(pool, prefab);
 
-           // CreatePlatformView(platform.transform);
+            // CreatePlatformView(platform.transform);
         }
     }
 

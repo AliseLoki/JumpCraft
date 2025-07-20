@@ -16,5 +16,4 @@ MonoBehaviour:
   _name: Ghast
   _view: {fileID: 21300000, guid: 781eedb91c663bb4aae268de1f8df046, type: 3}
   _background: {fileID: 21300000, guid: 51dbb89cea4913046b5e9aecbb924cb3, type: 3}
-  _prefab: {fileID: 2386281579064349718, guid: d7c76a6112dbf2348b955247448e00b8, type: 3}
-  _viewImage: {fileID: 2800000, guid: bb20832d52098f44bbdc2089d5866709, type: 3}
+  _viewImage: {fileID: 2800000, guid: 4591c11fb0e78834c974f1ab73abc323, type: 3}

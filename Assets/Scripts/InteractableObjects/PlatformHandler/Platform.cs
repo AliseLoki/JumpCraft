@@ -11,9 +11,9 @@ public class Platform : Interactable
     private float _sector3 = 0.5f;
 
     private int _bonusScore;
+    private PlatformsScoreController _scoreController;
 
-    public event Action<int> PlayerLandedOnPlatform;
-    public Transform ViewContainer => _viewContainer;
+    //public Transform ViewContainer => _viewContainer;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -21,7 +21,7 @@ public class Platform : Interactable
         {
             _bonusScore = CalculateBonus(player.transform.position.x, player.transform.position.z);
             _scoreBonusView.ShowScore(_bonusScore);
-            PlayerLandedOnPlatform?.Invoke(_bonusScore);
+            if (_scoreController != null) _scoreController.OnScoreChanged(_bonusScore);
         }
     }
 
@@ -31,6 +31,11 @@ public class Platform : Interactable
         {
             _scoreBonusView.SetScoreBonusActive(false);
         }
+    }
+
+    public void Init(PlatformsScoreController scoreController)
+    {
+        _scoreController = scoreController;
     }
 
     private int CalculateBonus(float x, float z)

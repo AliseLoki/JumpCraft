@@ -14,14 +14,16 @@ public class PlatformScoreBonusView : MonoBehaviour
 
     [SerializeField] private TMP_Text _text;
 
+    private Vector2 _textDefaultPos = new Vector2(0.5f, -3);
+
     public int BonusMax { get; private set; } = 3;
     public int BonusMid { get; private set; } = 2;
     public int BonusMin { get; private set; } = 1;
 
-    private void Awake()
+    private void OnEnable()
     {
+        _text.rectTransform.anchoredPosition = _textDefaultPos;
         SetScoreBonusActive(false);
-        // можно и в эвейке платформы вызывать
     }
 
     public void SetScoreBonusActive(bool isActive)

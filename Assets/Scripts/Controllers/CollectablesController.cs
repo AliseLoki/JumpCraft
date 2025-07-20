@@ -17,17 +17,17 @@ public class CollectablesController : MonoBehaviour
     {
         _platformsController.PlatformHasSpawnedOnAxisX -= OnPlatformHasSpawned;
     }
-
+    
     public void Init(PlatformsController platformsController, ObjectsPool objectsPool)
     {
         _platformsController = platformsController;
         _pool = objectsPool;    
-        //_platformsController.PlatformHasSpawnedOnAxisX += OnPlatformHasSpawned;
+        _platformsController.PlatformHasSpawnedOnAxisX += OnPlatformHasSpawned;
     }
 
     public void StartGame()
     {
-        _platformsController.PlatformHasSpawnedOnAxisX += OnPlatformHasSpawned;
+        //_platformsController.PlatformHasSpawnedOnAxisX += OnPlatformHasSpawned;
     }
 
     private void OnPlatformHasSpawned(bool isTrue)
@@ -42,14 +42,14 @@ public class CollectablesController : MonoBehaviour
 
     private void SpawnTemplate(List<Interactable> pool, Interactable template)
     {
-        var newTemplate = _pool.GetPooledObject(pool, template);
-        newTemplate.transform.position = CalculateCollectablePosition();
-        newTemplate.gameObject.SetActive(true);
+        //var newTemplate = _pool.GetPooledObject(pool, template, CalculateCollectablePosition());
+        //newTemplate.transform.position = CalculateCollectablePosition();
+       // newTemplate.gameObject.SetActive(true);
     }
 
-    private Vector3 CalculateCollectablePosition()
-    {
-        return new Vector3(_platformsController.Center.x, _platformsController.Center.y + _collectablesPosYOffset,
-            _platformsController.Center.z);
-    }
+    //private Vector3 CalculateCollectablePosition()
+    //{
+    //    //return new Vector3(_platformsController.Center.x, _platformsController.Center.y + _collectablesPosYOffset,
+    //    //    _platformsController.Center.z);
+    //}
 }

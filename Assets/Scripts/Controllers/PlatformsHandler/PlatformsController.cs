@@ -3,17 +3,24 @@ using UnityEngine;
 
 public class PlatformsController : MonoBehaviour
 {
+    private Player _player;
+
     private Platform _firstPlatform;
+    private Platform _secondPlatform;
+    private Platform _defaultPlatform;
     private Platform _currentPlatform;
-    private Platform _previousPlatform;
-    private Platform _platformToDeactivate;
 
     private ObjectsPool _objectsPool;
+
+    [SerializeField] private Transform _defaultPosition;
 
     [SerializeField] private float _minOffset = 5;
     [SerializeField] private float _maxOffset = 8;
 
-    private Vector3 _centerBetweenCurrentAndPreviousPlatform;
+    [SerializeField] private float _minHeightOffset = 0;
+    [SerializeField] private float _maxHeightOffset = 3;
+
+    //private Vector3 _centerBetweenCurrentAndPreviousPlatform;
 
     private PlatformsScoreController _scoreController;
 
@@ -21,74 +28,67 @@ public class PlatformsController : MonoBehaviour
 
     public PlatformsScoreController ScoreController => _scoreController;
 
-    public Vector3 Center => _centerBetweenCurrentAndPreviousPlatform;
+    //public Vector3 Center => _centerBetweenCurrentAndPreviousPlatform;
 
     private void OnDisable()
     {
-        _currentPlatform.PlayerLandedOnPlatform -= OnPlayerHasLandedOnPlatform;
+        _player.CollisionHandler.PlayerJumpedOnPlatform -= OnPlayerJumpedOnPlatform;
     }
 
-    public void Init(ObjectsPool pool)
+    public void Init(ObjectsPool pool, Player player)
     {
+        _defaultPosition = transform;
         _scoreController = new PlatformsScoreController();
         _objectsPool = pool;
-        _firstPlatform = _objectsPool.GetPooledObject(_objectsPool.Platforms, _objectsPool.PlatformToPool) as Platform;
-        _firstPlatform.transform.position = new Vector3(0, 0, 0);
-        _firstPlatform.gameObject.SetActive(true);
-        _currentPlatform = _firstPlatform;
-        TransformPlatformOnAxis(true, CalculateOffsetForPlatformsPosition(), 0);
+        _currentPlatform = _objectsPool.GetPooledObject(_objectsPool.Platforms, _objectsPool.PlatformToPool, transform.position) as Platform;
+        _player = player;
+        _player.CollisionHandler.PlayerJumpedOnPlatform += OnPlayerJumpedOnPlatform;
+        Spawn2Platforms();
     }
 
-    private void OnPlayerHasLandedOnPlatform(int bonusScore)
+    private void OnPlayerJumpedOnPlatform(Platform platform)
     {
-        _scoreController.OnScoreChanged(bonusScore);
+        if (platform == _firstPlatform)
+        {
+            _defaultPlatform = _currentPlatform;
+            _currentPlatform = _firstPlatform;
+            _firstPlatform = _secondPlatform;
+            _defaultPosition = _firstPlatform.transform;
+            _secondPlatform = GetPlatformFromPool();
+        }
+        else if (platform == _secondPlatform)
+        {
+            _currentPlatform = _secondPlatform;
+            _defaultPlatform = _firstPlatform;
+            Spawn2Platforms();
+        }
 
-        var random = UnityEngine.Random.Range(0, 2);
-
-        if (random == 0) TransformPlatformOnAxis(true, CalculateOffsetForPlatformsPosition(), 0);
-        else TransformPlatformOnAxis(false, 0, CalculateOffsetForPlatformsPosition());
+        if (_defaultPlatform != null) _defaultPlatform.gameObject.SetActive(false);
     }
 
-    private void TransformPlatformOnAxis(bool isAxisX, float x, float z)
+    private void Spawn2Platforms()
     {
-        Platform platform = TakePlatformFromPool(x, z);
-        InitPlatforms(platform);
-        _centerBetweenCurrentAndPreviousPlatform = CalculateDistanceBetweenPlatforms();
-        PlatformHasSpawnedOnAxisX?.Invoke(isAxisX);
+        _firstPlatform = GetPlatformFromPool();
+        _secondPlatform = GetPlatformFromPool();
     }
 
-    private Platform TakePlatformFromPool(float offsetX, float offsetZ)
+    private Platform GetPlatformFromPool()
     {
-        Platform platform = _objectsPool.GetPooledObject(_objectsPool.Platforms, _objectsPool.PlatformToPool) as Platform;
-        platform.transform.position = CalculatePlatformPosition(offsetX, offsetZ);
-        platform.gameObject.SetActive(true);
-        return platform;
+        var newPlatfrorm = _objectsPool.GetPooledObject(_objectsPool.Platforms, _objectsPool.PlatformToPool,
+            CalculatePlatformPos(_defaultPosition, CalculateOffsetForPlatformsPos(), 0)) as Platform;
+        _defaultPosition = newPlatfrorm.transform;
+        newPlatfrorm.Init(_scoreController);
+        return newPlatfrorm;
     }
 
-    private void InitPlatforms(Platform platform)
-    {
-        if (_platformToDeactivate != null) _platformToDeactivate.gameObject.SetActive(false);
-        _platformToDeactivate = _previousPlatform;
-        _previousPlatform = _currentPlatform;
-        _currentPlatform.PlayerLandedOnPlatform -= OnPlayerHasLandedOnPlatform;
-        _currentPlatform = platform;
-        _currentPlatform.PlayerLandedOnPlatform += OnPlayerHasLandedOnPlatform;
-    }
-
-    private Vector3 CalculatePlatformPosition(float offsetX, float offsetZ)
-    {
-        // пока берем позицию по у предыдущей платформы
-        return new Vector3(_currentPlatform.transform.position.x + offsetX,
-           _currentPlatform.transform.position.y, _currentPlatform.transform.position.z + offsetZ);
-    }
-
-    private Vector3 CalculateDistanceBetweenPlatforms()
-    {
-        return (_currentPlatform.transform.position + _previousPlatform.transform.position) / 2;
-    }
-
-    private float CalculateOffsetForPlatformsPosition()
+    private float CalculateOffsetForPlatformsPos()
     {
         return UnityEngine.Random.Range(_minOffset, _maxOffset);
+    }
+
+    private Vector3 CalculatePlatformPos(Transform defaultPos, float offsetX, float offsetZ)
+    {
+        float randomHeight = UnityEngine.Random.Range(_minHeightOffset, _maxHeightOffset);
+        return new Vector3(defaultPos.position.x + offsetX, randomHeight, defaultPos.position.z + offsetZ);
     }
 }

@@ -12,7 +12,7 @@ public class JumpHandler : MonoBehaviour
     [SerializeField] private int _maxJumpPower = 13;
     [SerializeField] private float _pauseBetweenIncreasingJumpPower = 0.2f;
     [SerializeField] private float _duration = 1;
-    [SerializeField] private float _jumpHeight = 3;
+    [SerializeField] private float _jumpHeight = 8;
 
     [SerializeField] private Player _player;
 
@@ -40,7 +40,7 @@ public class JumpHandler : MonoBehaviour
     public void Jump()
     {
         if (_player.CollisionHandler.IsGrounded)
-        {          
+        {
             if (_player.IsJumpingOnAxisX) JumpDefault(_jumpPower, 0);
             else JumpDefault(0, _jumpPower);
         }
@@ -57,8 +57,11 @@ public class JumpHandler : MonoBehaviour
 
         transform.DOJump(new Vector3(transform.position.x + jumpPowerX, transform.position.y,
             transform.position.z + jumpPowerZ), _jumpHeight, NumJumps, _duration);
+
+        //transform.DOJump(new Vector3(transform.position.x + jumpPowerX, transform.position.y,
+        //    transform.position.z + jumpPowerZ), _jumpHeight, NumJumps, _duration);
         if (_coroutine != null) StopCoroutine(_coroutine);
-        SetDefaultNumberOfJumpPower();
+        SetJumpPower(_minJumpPower);
     }
 
     private IEnumerator JumpPowerIncreaser()
@@ -88,11 +91,5 @@ public class JumpHandler : MonoBehaviour
     {
         _jumpPower = jumpPower;
         JumpPowerChanged?.Invoke(_jumpPower);
-    }
-
-    private void SetDefaultNumberOfJumpPower()
-    {
-        _jumpPower = _minJumpPower;
-        JumpPowerChanged.Invoke(_jumpPower);
     }
 }

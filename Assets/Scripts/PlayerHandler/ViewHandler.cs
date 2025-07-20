@@ -16,7 +16,7 @@ public class ViewHandler : MonoBehaviour
 
     public void InitDefaultView()
     {
-        // AddNewViewPrefab(_currentPlayerViewSO);
+        _material.mainTexture = _currentPlayerViewSO.ViewImage;
     }
 
     public void InitNewView(PlayerViewSO playerViewSO)

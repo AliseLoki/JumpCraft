@@ -36,7 +36,7 @@ public class BootsTrap : MonoBehaviour
     {
         _mainCamera.Init(_player);
         _objectsPool.Init(_fabrica, _platformViews);
-        _platformsController.Init(_objectsPool);
+        _platformsController.Init(_objectsPool,_player);
         _collectablesController.Init(_platformsController, _objectsPool);
         _player.Init(_platformsController, _fabrica, _shopView, _soundController);
         _ui.Init(_player, _fabrica, _platformsController);

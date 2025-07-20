@@ -16,5 +16,4 @@ MonoBehaviour:
   _name: Steve
   _view: {fileID: 21300000, guid: 4ddd5d90947214244a7206284137cc7a, type: 3}
   _background: {fileID: 21300000, guid: 51dbb89cea4913046b5e9aecbb924cb3, type: 3}
-  _prefab: {fileID: -2502087018880258209, guid: 5553b62a9216c7c49bed9f5a00cbc627, type: 3}
-  _viewImage: {fileID: 2800000, guid: edf1fe7b53ce54e41996b5fd8fb3d9d0, type: 3}
+  _viewImage: {fileID: 2800000, guid: bb20832d52098f44bbdc2089d5866709, type: 3}
