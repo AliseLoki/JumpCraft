@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f853b109296742d4993b587149011ca2, type: 3}
+  m_Name: SteveDefaultViewSO
+  m_EditorClassIdentifier: 
+  _price: 0
+  _name: Steve
+  _view: {fileID: 21300000, guid: 4ddd5d90947214244a7206284137cc7a, type: 3}
+  _background: {fileID: 21300000, guid: 51dbb89cea4913046b5e9aecbb924cb3, type: 3}
+  _prefab: {fileID: -2502087018880258209, guid: 5553b62a9216c7c49bed9f5a00cbc627, type: 3}
