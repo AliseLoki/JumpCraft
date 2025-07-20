@@ -38,7 +38,7 @@ public class UIHandler : MonoBehaviour
 
     public void StartGame()
     {
-       // ShowNewValue(_diamondsAmountText,YG2.saves.DiamondsAmount);
+       ShowNewValue(_diamondsAmountText,YG2.saves.DiamondsAmount);
         SetJumpPowerScaleAmount(0);
         _restartButton.onClick.AddListener(OnRestartButtonPressed);
         _player.CollectablesAmountChanged += OnCollectablesAmountChanged;
@@ -48,7 +48,7 @@ public class UIHandler : MonoBehaviour
 
     private void OnRestartButtonPressed()
     {
-       // YG2.InterstitialAdvShow();
+        YG2.InterstitialAdvShow();
         SceneManager.LoadScene(0);
     }
 
@@ -59,14 +59,14 @@ public class UIHandler : MonoBehaviour
 
     private void OnCollectablesAmountChanged()
     {// вынести в отдельный метод и класс
-       // YG2.saves.DiamondsAmount++;
-       // YG2.SaveProgress();
-       // ShowNewValue(_diamondsAmountText, YG2.saves.DiamondsAmount);
+        YG2.saves.DiamondsAmount++;
+        YG2.SaveProgress();
+        ShowNewValue(_diamondsAmountText, YG2.saves.DiamondsAmount);
     }
 
     private void OnScoreChanged(int score)
     {
-      //  YG2.SetLeaderboard("leaderboard",score);
+       YG2.SetLeaderboard("leaderboard",score);
         ShowNewValue(_scoreText, score);
     }
 
