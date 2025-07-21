@@ -15,14 +15,14 @@ public class CollectablesController : MonoBehaviour
 
     private void OnDisable()
     {
-        _platformsController.PlatformHasSpawnedOnAxisX -= OnPlatformHasSpawned;
+      //  _platformsController.PlatformHasSpawnedOnAxisX -= OnPlatformHasSpawned;
     }
     
     public void Init(PlatformsController platformsController, ObjectsPool objectsPool)
     {
         _platformsController = platformsController;
         _pool = objectsPool;    
-        _platformsController.PlatformHasSpawnedOnAxisX += OnPlatformHasSpawned;
+      //  _platformsController.PlatformHasSpawnedOnAxisX += OnPlatformHasSpawned;
     }
 
     public void StartGame()

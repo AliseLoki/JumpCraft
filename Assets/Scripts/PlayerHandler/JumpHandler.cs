@@ -8,11 +8,11 @@ public class JumpHandler : MonoBehaviour
     private const int NumJumps = 1;
 
     [SerializeField] private int _jumpPower = 3;
-    [SerializeField] private int _minJumpPower = 3;
-    [SerializeField] private int _maxJumpPower = 13;
-    [SerializeField] private float _pauseBetweenIncreasingJumpPower = 0.2f;
-    [SerializeField] private float _duration = 1;
-    [SerializeField] private float _jumpHeight = 8;
+   // [SerializeField] private int _minJumpPower = 3;
+    //[SerializeField] private int _maxJumpPower = 13;
+   // [SerializeField] private float _pauseBetweenIncreasingJumpPower = 0.2f;
+   // [SerializeField] private float _duration = 1;
+    //[SerializeField] private float _jumpHeight = 0;
 
     [SerializeField] private Player _player;
 
@@ -27,7 +27,7 @@ public class JumpHandler : MonoBehaviour
 
     public float GetCurrentPower => _jumpPower;
 
-    public float GetMaxJumpPower => _maxJumpPower;
+    public float GetMaxJumpPower => Semen.Instance.MaxJumpPower;
 
     public void IncreaseJumpPower()
     {
@@ -55,13 +55,13 @@ public class JumpHandler : MonoBehaviour
     {
         OnJump?.Invoke();
 
-        transform.DOJump(new Vector3(transform.position.x + jumpPowerX, transform.position.y,
-            transform.position.z + jumpPowerZ), _jumpHeight, NumJumps, _duration);
+        transform.DOJump(new Vector3(transform.position.x + jumpPowerX, transform.position.y + Semen.Instance.MinJumpPower,
+            transform.position.z + jumpPowerZ), Semen.Instance.JumpHeight, NumJumps, Semen.Instance.JumpDuration);
 
         //transform.DOJump(new Vector3(transform.position.x + jumpPowerX, transform.position.y,
         //    transform.position.z + jumpPowerZ), _jumpHeight, NumJumps, _duration);
         if (_coroutine != null) StopCoroutine(_coroutine);
-        SetJumpPower(_minJumpPower);
+        SetJumpPower(Semen.Instance.MinJumpPower);
     }
 
     private IEnumerator JumpPowerIncreaser()
@@ -71,18 +71,18 @@ public class JumpHandler : MonoBehaviour
             _player.SoundController.PlaySound(SoundName.JumpPowerUp.ToString());
             OnPrepareJump?.Invoke();
 
-            for (int i = _minJumpPower; i <= _maxJumpPower; i++)
+            for (int i = Semen.Instance.MinJumpPower; i <= Semen.Instance.MaxJumpPower; i++)
             {
                 SetJumpPower(i);
-                yield return new WaitForSeconds(_pauseBetweenIncreasingJumpPower);
+                yield return new WaitForSeconds(Semen.Instance._pauseBetweenIncreasingJumpPower);
             }
 
             _player.SoundController.PlaySound(SoundName.JumpPowerDown.ToString());
 
-            for (int i = _maxJumpPower; i >= _minJumpPower; i--)
+            for (int i = Semen.Instance.MaxJumpPower; i >= Semen.Instance.MinJumpPower; i--)
             {
                 SetJumpPower(i);
-                yield return new WaitForSeconds(_pauseBetweenIncreasingJumpPower);
+                yield return new WaitForSeconds(Semen.Instance._pauseBetweenIncreasingJumpPower);
             }
         }
     }
@@ -91,5 +91,6 @@ public class JumpHandler : MonoBehaviour
     {
         _jumpPower = jumpPower;
         JumpPowerChanged?.Invoke(_jumpPower);
+        Debug.Log(_jumpPower);
     }
 }

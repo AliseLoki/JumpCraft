@@ -14,11 +14,11 @@ public class PlatformsController : MonoBehaviour
 
     [SerializeField] private Transform _defaultPosition;
 
-    [SerializeField] private float _minOffset = 5;
-    [SerializeField] private float _maxOffset = 8;
+    //private float _minOffset = 5;
+    //private float _maxOffset = 8;
 
-    [SerializeField] private float _minHeightOffset = 0;
-    [SerializeField] private float _maxHeightOffset = 3;
+    //private float _minHeightOffset = 0;
+    //private float _maxHeightOffset = 3;
 
     //private Vector3 _centerBetweenCurrentAndPreviousPlatform;
 
@@ -40,7 +40,7 @@ public class PlatformsController : MonoBehaviour
         _defaultPosition = transform;
         _scoreController = new PlatformsScoreController();
         _objectsPool = pool;
-        _currentPlatform = _objectsPool.GetPooledObject(_objectsPool.Platforms, _objectsPool.PlatformToPool, transform.position) as Platform;
+        _currentPlatform = _objectsPool.GetPooledObject(_objectsPool.Platforms, _objectsPool.PlatformToPool, new Vector3(0, 3.1f, 0)) as Platform;
         _player = player;
         _player.CollisionHandler.PlayerJumpedOnPlatform += OnPlayerJumpedOnPlatform;
         Spawn2Platforms();
@@ -75,20 +75,26 @@ public class PlatformsController : MonoBehaviour
     private Platform GetPlatformFromPool()
     {
         var newPlatfrorm = _objectsPool.GetPooledObject(_objectsPool.Platforms, _objectsPool.PlatformToPool,
-            CalculatePlatformPos(_defaultPosition, CalculateOffsetForPlatformsPos(), 0)) as Platform;
+            CalculatePlatformPos(_defaultPosition,
+            CalculateRandomValue(Semen.Instance.MinOffsetForSpawnPlatform, Semen.Instance.MaxOffsetForSpawnPlatform), 0)) as Platform;
         _defaultPosition = newPlatfrorm.transform;
         newPlatfrorm.Init(_scoreController);
         return newPlatfrorm;
     }
 
-    private float CalculateOffsetForPlatformsPos()
-    {
-        return UnityEngine.Random.Range(_minOffset, _maxOffset);
-    }
+    //private float CalculateOffsetForPlatformsPos()
+    //{
+    //    return UnityEngine.Random.Range(_minOffset, _maxOffset);
+    //}
 
     private Vector3 CalculatePlatformPos(Transform defaultPos, float offsetX, float offsetZ)
     {
-        float randomHeight = UnityEngine.Random.Range(_minHeightOffset, _maxHeightOffset);
+        float randomHeight = CalculateRandomValue(Semen.Instance.PlatformsMinHeight, Semen.Instance.PlatformsMaxHeight);
         return new Vector3(defaultPos.position.x + offsetX, randomHeight, defaultPos.position.z + offsetZ);
+    }
+
+    private float CalculateRandomValue(float min, float max)
+    {
+        return UnityEngine.Random.Range(min, max);
     }
 }
