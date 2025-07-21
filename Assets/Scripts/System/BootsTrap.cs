@@ -24,7 +24,8 @@ public class BootsTrap : MonoBehaviour
 
     private void CreateControllers()
     {
-        _fabrica = CreateEmptyObjectWithScript<Fabrica>(nameof(Fabrica));       
+        CreateEmptyObjectWithScript<Semen>(nameof(Semen));
+        _fabrica = CreateEmptyObjectWithScript<Fabrica>(nameof(Fabrica));
         _objectsPool = CreateEmptyObjectWithScript<ObjectsPool>(nameof(ObjectsPool));
         _platformsController = CreateEmptyObjectWithScript<PlatformsController>(nameof(PlatformsController));
         _collectablesController = CreateEmptyObjectWithScript<CollectablesController>(nameof(CollectablesController));
