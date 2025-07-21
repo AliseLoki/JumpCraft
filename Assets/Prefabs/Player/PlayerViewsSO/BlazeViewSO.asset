@@ -15,6 +15,5 @@ MonoBehaviour:
   _price: 0
   _name: Blaze
   _view: {fileID: 21300000, guid: ddb304b63bc279e40bc38fa7c2c02d25, type: 3}
-  _background: {fileID: 21300000, guid: 51dbb89cea4913046b5e9aecbb924cb3, type: 3}
-  _prefab: {fileID: -4498904529869257792, guid: 187467c95e0662d4680479f795d73229, type: 3}
+  _background: {fileID: 21300000, guid: a078cfc8f168cf94c91550a367b8454f, type: 3}
   _viewImage: {fileID: 2800000, guid: 4591c11fb0e78834c974f1ab73abc323, type: 3}

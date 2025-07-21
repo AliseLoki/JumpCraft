@@ -7,7 +7,6 @@ public class CollectablesController : MonoBehaviour
     private ObjectsPool _pool;
     private PlatformsController _platformsController;
 
-
     private void OnDisable()
     {
         _platformsController.CenterChanged -= OnCenterChanged;
@@ -26,11 +25,10 @@ public class CollectablesController : MonoBehaviour
 
     private void OnCenterChanged(Vector3 pos)
     {
-        int chance = Random.Range(0, 2);
-        // вынести шанс в инспектор
+        int chance = Random.Range(0, Semen.Instance.DiamondSpawnChance);
+       
         if (chance == 0)
         {
-
             var newDiamond = _pool.GetPooledObject(_pool.Coins, _pool.CoinToPool, new Vector3(pos.x, pos.y + _collectablesPosYOffset, pos.z));
         }
     }

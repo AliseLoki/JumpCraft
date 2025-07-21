@@ -15,5 +15,5 @@ MonoBehaviour:
   _price: 0
   _name: Steve
   _view: {fileID: 21300000, guid: 4ddd5d90947214244a7206284137cc7a, type: 3}
-  _background: {fileID: 21300000, guid: 51dbb89cea4913046b5e9aecbb924cb3, type: 3}
+  _background: {fileID: 21300000, guid: a078cfc8f168cf94c91550a367b8454f, type: 3}
   _viewImage: {fileID: 2800000, guid: bb20832d52098f44bbdc2089d5866709, type: 3}

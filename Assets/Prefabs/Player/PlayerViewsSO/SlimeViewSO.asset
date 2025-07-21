@@ -15,5 +15,5 @@ MonoBehaviour:
   _price: 0
   _name: Shreck
   _view: {fileID: 21300000, guid: cc507fa14cd44e34887290ab40e071de, type: 3}
-  _background: {fileID: 21300000, guid: 51dbb89cea4913046b5e9aecbb924cb3, type: 3}
+  _background: {fileID: 21300000, guid: a078cfc8f168cf94c91550a367b8454f, type: 3}
   _viewImage: {fileID: 2800000, guid: 1a2c3829d830fd341a25fac2dbf281d4, type: 3}
