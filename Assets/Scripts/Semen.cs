@@ -16,6 +16,9 @@ public class Semen : MonoBehaviour
     public float MaxOffsetForSpawnPlatform = 9;
     // физические границы платформы (5, 3, 5);
 
+    [Header("ProbabilityOfEvent")]
+    public int TrampolineSpawnChance = 4; // шанс от 0 до 3 включительно то есть 25%
+    public int DiamondSpawnChance = 3; // шанс 33%
 
     public static Semen Instance { get; private set; }
 

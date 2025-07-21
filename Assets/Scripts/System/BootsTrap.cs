@@ -24,7 +24,7 @@ public class BootsTrap : MonoBehaviour
 
     private void CreateControllers()
     {
-        _fabrica = CreateEmptyObjectWithScript<Fabrica>(nameof(Fabrica));
+        _fabrica = CreateEmptyObjectWithScript<Fabrica>(nameof(Fabrica));       
         _objectsPool = CreateEmptyObjectWithScript<ObjectsPool>(nameof(ObjectsPool));
         _platformsController = CreateEmptyObjectWithScript<PlatformsController>(nameof(PlatformsController));
         _collectablesController = CreateEmptyObjectWithScript<CollectablesController>(nameof(CollectablesController));
@@ -36,7 +36,7 @@ public class BootsTrap : MonoBehaviour
     {
         _mainCamera.Init(_player);
         _objectsPool.Init(_fabrica, _platformViews);
-        _platformsController.Init(_objectsPool,_player);
+        _platformsController.Init(_objectsPool, _player);
         _collectablesController.Init(_platformsController, _objectsPool);
         _player.Init(_platformsController, _fabrica, _shopView, _soundController);
         _ui.Init(_player, _fabrica, _platformsController);

@@ -4,7 +4,8 @@ using UnityEngine;
 public class Platform : Interactable
 {
     [SerializeField] private PlatformScoreBonusView _scoreBonusView;
-    [SerializeField] private Transform _viewContainer;
+    //[SerializeField] private Transform _viewContainer;
+    [SerializeField] private Transform _trampoline;
 
     // в будущем сделать просчитывание через коллайдер платформы
     private float _sector2 = 1f;
@@ -13,7 +14,17 @@ public class Platform : Interactable
     private int _bonusScore;
     private PlatformsScoreController _scoreController;
 
-    //public Transform ViewContainer => _viewContainer;
+    public Transform Trampoline => _trampoline;
+
+    private void OnEnable()
+    {
+       // SetTrampolineActive();
+    }
+
+    private void OnDisable()
+    {
+        _trampoline.gameObject.SetActive(false);
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -36,6 +47,13 @@ public class Platform : Interactable
     public void Init(PlatformsScoreController scoreController)
     {
         _scoreController = scoreController;
+    }
+
+    private void SetTrampolineActive()
+    {
+        int random = UnityEngine.Random.Range(0, 4); //Semen.Instance.TrampolineSpawnChance);
+        
+        if(random == 0) _trampoline.gameObject.SetActive(true);
     }
 
     private int CalculateBonus(float x, float z)
