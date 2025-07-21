@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private PlatformsController _platformsController;
-    private Fabrica _fabrica;
-
     private ShopView _shopView;
     private SoundController _soundController;
 
@@ -15,8 +12,6 @@ public class Player : MonoBehaviour
 
     public event Action CollectablesAmountChanged;
 
-    public Fabrica Fabrica => _fabrica;
-
     public CollisionHandler CollisionHandler => _collisionHandler;
     public JumpHandler JumpHandler => _jumpHandler;
 
@@ -24,17 +19,13 @@ public class Player : MonoBehaviour
 
     public ShopView ShopView => _shopView;
 
-    public PlatformsController PlatformsController => _platformsController;
-
     private void OnDisable()
     { 
         _shopView.PlayerViewChanged -= OnPlayerViewChanged;
     }
 
-    public void Init(PlatformsController platformsController, Fabrica fabrica, ShopView shopView, SoundController contr)
+    public void Init( ShopView shopView, SoundController contr)
     {
-        _platformsController = platformsController;
-        _fabrica = fabrica;
         _shopView = shopView;
         _soundController = contr;
     }

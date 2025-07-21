@@ -9,6 +9,7 @@ public class CollisionHandler : MonoBehaviour
 
 
     public event Action<Platform> PlayerJumpedOnPlatform;
+    public event Action<Platform> PlayerJumpedOnTrampoline;
 
     public bool IsGrounded => _isGrounded;
 
@@ -19,13 +20,22 @@ public class CollisionHandler : MonoBehaviour
             _isGrounded = true;
             _player.SoundController.PlaySound(SoundName.Landing.ToString());
             _player.JumpHandler.OnPlayerIsLanded();
+
              PlayerJumpedOnPlatform?.Invoke(platform);
         }
 
-        if (collision.collider.TryGetComponent(out Floor floor))
-        { 
-            _player.SoundController.PlaySound(SoundName.FallingOnTheFloor.ToString());
+        if(collision.collider.TryGetComponent(out Trampoline trampoline))
+        {
+            _isGrounded = true;
+            _player.SoundController.PlaySound(SoundName.Landing.ToString());
+            _player.JumpHandler.OnPlayerIsLanded();
+
         }
+
+        //if (collision.collider.TryGetComponent(out Floor floor))
+        //{ 
+        //    _player.SoundController.PlaySound(SoundName.FallingOnTheFloor.ToString());
+        //}
     }
 
     private void OnCollisionExit(Collision collision)

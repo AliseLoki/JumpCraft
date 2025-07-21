@@ -1,55 +1,37 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CollectablesController : MonoBehaviour
 {
-    [SerializeField] private float _collectablesPosYOffset = 6;
+    [SerializeField] private float _collectablesPosYOffset = 5;
 
     private ObjectsPool _pool;
     private PlatformsController _platformsController;
 
-    private void OnEnable()
-    {
-       // _platformsController.PlatformHasSpawnedOnAxisX += OnPlatformHasSpawned;
-    }
 
     private void OnDisable()
     {
-      //  _platformsController.PlatformHasSpawnedOnAxisX -= OnPlatformHasSpawned;
+        _platformsController.CenterChanged -= OnCenterChanged;
     }
-    
+
     public void Init(PlatformsController platformsController, ObjectsPool objectsPool)
     {
         _platformsController = platformsController;
-        _pool = objectsPool;    
-      //  _platformsController.PlatformHasSpawnedOnAxisX += OnPlatformHasSpawned;
+        _pool = objectsPool;
     }
 
     public void StartGame()
     {
-        //_platformsController.PlatformHasSpawnedOnAxisX += OnPlatformHasSpawned;
+        _platformsController.CenterChanged += OnCenterChanged;
     }
 
-    private void OnPlatformHasSpawned(bool isTrue)
+    private void OnCenterChanged(Vector3 pos)
     {
         int chance = Random.Range(0, 2);
         // вынести шанс в инспектор
         if (chance == 0)
         {
-            SpawnTemplate(_pool.Coins, _pool.CoinToPool);
+
+            var newDiamond = _pool.GetPooledObject(_pool.Coins, _pool.CoinToPool, new Vector3(pos.x, pos.y + _collectablesPosYOffset, pos.z));
         }
     }
-
-    private void SpawnTemplate(List<Interactable> pool, Interactable template)
-    {
-        //var newTemplate = _pool.GetPooledObject(pool, template, CalculateCollectablePosition());
-        //newTemplate.transform.position = CalculateCollectablePosition();
-       // newTemplate.gameObject.SetActive(true);
-    }
-
-    //private Vector3 CalculateCollectablePosition()
-    //{
-    //    //return new Vector3(_platformsController.Center.x, _platformsController.Center.y + _collectablesPosYOffset,
-    //    //    _platformsController.Center.z);
-    //}
 }

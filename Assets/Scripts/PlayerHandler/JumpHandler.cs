@@ -88,6 +88,5 @@ public class JumpHandler : MonoBehaviour
     {
         _jumpPower = jumpPower;
         JumpPowerChanged?.Invoke(_jumpPower);
-        Debug.Log(_jumpPower);
     }
 }

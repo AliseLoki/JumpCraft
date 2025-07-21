@@ -4,7 +4,6 @@ using UnityEngine;
 public class Platform : Interactable
 {
     [SerializeField] private PlatformScoreBonusView _scoreBonusView;
-    //[SerializeField] private Transform _viewContainer;
     [SerializeField] private Transform _trampoline;
 
     // в будущем сделать просчитывание через коллайдер платформы
@@ -18,7 +17,7 @@ public class Platform : Interactable
 
     private void OnEnable()
     {
-        SetTrampolineActive();
+      //  SetTrampolineActive();
     }
 
     private void OnDisable()
@@ -61,7 +60,11 @@ public class Platform : Interactable
         float positiveX = CalculatePlayerLandingZone(x, transform.position.x);
         float positiveZ = CalculatePlayerLandingZone(z, transform.position.z);
 
-        if (positiveX < _sector3 && positiveZ < _sector3) return _scoreBonusView.BonusMax;
+        if (positiveX < _sector3 && positiveZ < _sector3)
+        {
+            if (_trampoline.gameObject.activeSelf) Debug.Log("Прыгай в центр");
+            return _scoreBonusView.BonusMax;
+        }           
         else if (positiveX < _sector2 && positiveZ < _sector2) return _scoreBonusView.BonusMid;
         else return _scoreBonusView.BonusMin;
     }

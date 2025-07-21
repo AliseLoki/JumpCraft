@@ -20,15 +20,16 @@ public class PlatformsController : MonoBehaviour
     //private float _minHeightOffset = 0;
     //private float _maxHeightOffset = 3;
 
-    //private Vector3 _centerBetweenCurrentAndPreviousPlatform;
+    // private Vector3 _centerBetweenFirstAndSecondPlatform;
 
     private PlatformsScoreController _scoreController;
 
-    public event Action<bool> PlatformHasSpawnedOnAxisX;
-
     public PlatformsScoreController ScoreController => _scoreController;
 
-    //public Vector3 Center => _centerBetweenCurrentAndPreviousPlatform;
+    //public Vector3 Center => _centerBetweenFirstAndSecondPlatform;
+
+    // временно!!
+    public event Action<Vector3> CenterChanged;
 
     private void OnDisable()
     {
@@ -64,6 +65,13 @@ public class PlatformsController : MonoBehaviour
         }
 
         if (_defaultPlatform != null) _defaultPlatform.gameObject.SetActive(false);
+
+        CenterChanged?.Invoke(CalculateCenterBetweenPlatforms(_firstPlatform, _secondPlatform));
+    }
+
+    private Vector3 CalculateCenterBetweenPlatforms(Platform first, Platform second)
+    {
+        return (first.transform.position + second.transform.position) / 2;
     }
 
     private void Spawn2Platforms()
