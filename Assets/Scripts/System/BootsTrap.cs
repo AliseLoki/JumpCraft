@@ -6,7 +6,6 @@ public class BootsTrap : MonoBehaviour
     [SerializeField] private CameraController _mainCamera;
     [SerializeField] private ShopView _shopView;
     [SerializeField] private SoundController _soundController;
-    [SerializeField] private List<PlatformView> _platformViews;
     [SerializeField] private UIHandler _ui;
 
     private Player _player;
@@ -30,13 +29,12 @@ public class BootsTrap : MonoBehaviour
         _platformsController = CreateEmptyObjectWithScript<PlatformsController>(nameof(PlatformsController));
         _collectablesController = CreateEmptyObjectWithScript<CollectablesController>(nameof(CollectablesController));
         _player = _fabrica.CreatePrefab(_fabrica.GetPrefabLinkFromFolder<Player>(nameof(Player)));
-        _fabrica.CreatePrefab(_fabrica.GetPrefabLinkFromFolder<Floor>(nameof(Floor)));
     }
 
     private void InitReferences()
     {
         _mainCamera.Init(_player);
-        _objectsPool.Init(_fabrica, _platformViews);
+        _objectsPool.Init(_fabrica);
         _platformsController.Init(_objectsPool, _player);
         _collectablesController.Init(_platformsController, _objectsPool);
         _player.Init(_platformsController, _fabrica, _shopView, _soundController);

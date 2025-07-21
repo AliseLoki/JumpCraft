@@ -6,8 +6,6 @@ public class ViewHandler : MonoBehaviour
     private const string Piglin = "Piglin";
 
     [SerializeField] private Player _player;
-    // [SerializeField] private Transform _viewContainer;
-    // [SerializeField] private PlayerView _currentPlayerView;
     [SerializeField] private PlayerViewSO _currentPlayerViewSO;
     [SerializeField] private Transform _crown;
     [SerializeField] private Material _material;
@@ -26,14 +24,11 @@ public class ViewHandler : MonoBehaviour
             if (!CheckIfPlayerViewSOExist(playerViewSO))
             {
                 _allAccessablePlayerViewsSO.Add(playerViewSO);
-                // AddNewViewPrefab(playerViewSO);
-
             }
 
             _currentPlayerViewSO = playerViewSO;
             _material.mainTexture = playerViewSO.ViewImage;
             _crown.gameObject.SetActive(CheckIfPig(playerViewSO));
-            // SetExistingPrefabActive(playerViewSO);
         }
     }
 
@@ -48,35 +43,4 @@ public class ViewHandler : MonoBehaviour
         foreach (var item in _allAccessablePlayerViewsSO) if (item == playerViewSO) return true;
         return false;
     }
-
-    //private void AddNewViewPrefab(PlayerViewSO playerViewSO)
-    //{
-    //    if (_currentPlayerView != null) _currentPlayerView.gameObject.SetActive(false);
-    //    _currentPlayerView = _player.Fabrica.CreatePrefab(playerViewSO.Prefab, Quaternion.identity, _viewContainer);
-    //    RotateViewAccordingToPlayerRotation(_currentPlayerView);
-    //    _currentPlayerView.gameObject.SetActive(true);
-    //}
-
-    //private void SetExistingPrefabActive(PlayerViewSO playerViewSO)
-    //{
-    //    foreach (Transform child in _viewContainer)
-    //    {
-    //        PlayerView existingView = child.GetComponent<PlayerView>();
-
-    //        if (existingView.PlayerViewSO == playerViewSO)
-    //        {
-    //            RotateViewAccordingToPlayerRotation(existingView);
-    //            existingView.gameObject.SetActive(true);              
-    //        }
-    //        else
-    //        {
-    //            existingView.gameObject.SetActive(false);
-    //        }
-    //    }
-    //}
-
-    //private void RotateViewAccordingToPlayerRotation(PlayerView view)
-    //{
-    //    view.transform.rotation = transform.rotation;
-    //}
 }

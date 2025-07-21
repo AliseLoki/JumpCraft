@@ -82,11 +82,6 @@ public class PlatformsController : MonoBehaviour
         return newPlatfrorm;
     }
 
-    //private float CalculateOffsetForPlatformsPos()
-    //{
-    //    return UnityEngine.Random.Range(_minOffset, _maxOffset);
-    //}
-
     private Vector3 CalculatePlatformPos(Transform defaultPos, float offsetX, float offsetZ)
     {
         float randomHeight = CalculateRandomValue(Semen.Instance.PlatformsMinHeight, Semen.Instance.PlatformsMaxHeight);

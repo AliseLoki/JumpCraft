@@ -3,16 +3,13 @@ using UnityEngine;
 
 public class ObjectsPool : MonoBehaviour
 {
-    // если при передаче объекта из пула делать его активным, то включать в других скриптах не придется
-    // можно внутри него создавать пустые контейнеры для платформ и даймондов
     [SerializeField] private int _amountToPool = 5;
-
-    private List<Interactable> _coins = new();
-    private List<Interactable> _platforms = new();
-    private List<PlatformView> _platformsViews = new();
 
     private Interactable _coinToPool;
     private Interactable _platformToPool;
+
+    private List<Interactable> _coins = new();
+    private List<Interactable> _platforms = new();
 
     private Fabrica _fabrica;
 
@@ -22,13 +19,11 @@ public class ObjectsPool : MonoBehaviour
     public List<Interactable> Coins => _coins;
     public List<Interactable> Platforms => _platforms;
 
-    public void Init(Fabrica fabrica, List<PlatformView> platformViews)
+    public void Init(Fabrica fabrica)
     {
         _fabrica = fabrica;
         _coinToPool = _fabrica.GetPrefabLinkFromFolder<Diamond>(nameof(Diamond));
         _platformToPool = _fabrica.GetPrefabLinkFromFolder<Platform>(nameof(Platform));
-
-        InitList(platformViews);
         InitContainers();
     }
 
@@ -39,57 +34,27 @@ public class ObjectsPool : MonoBehaviour
             if (!pool[i].gameObject.activeInHierarchy)
             {
                 Interactable obj = pool[i];
-                obj.transform.position = position;
-                obj.gameObject.SetActive(true);
+                SetPosition(obj, position);
                 return obj;
             }
         }
 
-        if (prefab as Platform)
-        {
-            var newPlatform = Create(pool, prefab);
-            newPlatform.gameObject.SetActive(true);
-            newPlatform.transform.position = position;
-            // CreatePlatformView(newPlatform.transform);
-            return newPlatform;
-        }
-        else
-        {
-            return Create(pool, prefab);
-        }
+        var newInteractable = Create(pool, prefab);
+        SetPosition(newInteractable, position);
+        pool.Add(newInteractable);
+        return newInteractable;
+    }
+
+    private void SetPosition(Interactable interactable, Vector3 pos)
+    {
+        interactable.gameObject.SetActive(true);
+        interactable.transform.position = pos;
     }
 
     private void InitContainers()
     {
         CreatePrefabsInPool(_coins, _coinToPool);
-        CreatePlatformWithView(_platforms, _platformToPool);
-    }
-
-    private void InitList(List<PlatformView> platformViews)
-    {
-        foreach (var platformView in platformViews)
-        {
-            _platformsViews.Add(platformView);
-        }
-    }
-
-    private void CreatePlatformWithView(List<Interactable> pool, Interactable prefab)
-    {
-        Interactable platform;
-
-        for (int i = 0; i < _amountToPool; i++)
-        {
-            platform = Create(pool, prefab);
-
-            // CreatePlatformView(platform.transform);
-        }
-    }
-
-    private PlatformView CreatePlatformView(Transform transform)
-    {
-        int index = Random.Range(0, _platformsViews.Count);
-        PlatformView view = _fabrica.CreatePrefab(_platformsViews[index], Quaternion.identity, transform);
-        return view;
+        CreatePrefabsInPool(_platforms, _platformToPool);
     }
 
     private void CreatePrefabsInPool(List<Interactable> pool, Interactable prefab)

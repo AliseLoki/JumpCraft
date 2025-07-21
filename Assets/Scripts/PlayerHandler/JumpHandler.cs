@@ -41,8 +41,7 @@ public class JumpHandler : MonoBehaviour
     {
         if (_player.CollisionHandler.IsGrounded)
         {
-            if (_player.IsJumpingOnAxisX) JumpDefault(_jumpPower, 0);
-            else JumpDefault(0, _jumpPower);
+            JumpDefault(_jumpPower, 0);          
         }
     }
 
@@ -58,8 +57,6 @@ public class JumpHandler : MonoBehaviour
         transform.DOJump(new Vector3(transform.position.x + jumpPowerX, transform.position.y + Semen.Instance.MinJumpPower,
             transform.position.z + jumpPowerZ), Semen.Instance.JumpHeight, NumJumps, Semen.Instance.JumpDuration);
 
-        //transform.DOJump(new Vector3(transform.position.x + jumpPowerX, transform.position.y,
-        //    transform.position.z + jumpPowerZ), _jumpHeight, NumJumps, _duration);
         if (_coroutine != null) StopCoroutine(_coroutine);
         SetJumpPower(Semen.Instance.MinJumpPower);
     }

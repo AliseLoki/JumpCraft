@@ -18,7 +18,7 @@ public class Platform : Interactable
 
     private void OnEnable()
     {
-       // SetTrampolineActive();
+        SetTrampolineActive();
     }
 
     private void OnDisable()
@@ -51,7 +51,7 @@ public class Platform : Interactable
 
     private void SetTrampolineActive()
     {
-        int random = UnityEngine.Random.Range(0, 4); //Semen.Instance.TrampolineSpawnChance);
+        int random = UnityEngine.Random.Range(0, Semen.Instance.TrampolineSpawnChance);
         
         if(random == 0) _trampoline.gameObject.SetActive(true);
     }
