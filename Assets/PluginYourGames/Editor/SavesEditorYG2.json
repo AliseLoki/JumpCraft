@@ -7,9 +7,38 @@
         false,
         false
     ],
-    "idSave": 75,
-    "DiamondsAmount": 75,
-    "PlayerViewSO": {
-        "instanceID": 0
-    }
+    "idSave": 158,
+    "DiamondsAmount": 0,
+    "CurrentPlayerViewSO": {
+        "instanceID": 24096
+    },
+    "AvailableViews": [
+        {
+            "instanceID": 24034
+        },
+        {
+            "instanceID": 24076
+        },
+        {
+            "instanceID": 23876
+        },
+        {
+            "instanceID": 24096
+        },
+        {
+            "instanceID": 24044
+        },
+        {
+            "instanceID": 24086
+        },
+        {
+            "instanceID": 24062
+        },
+        {
+            "instanceID": 24098
+        },
+        {
+            "instanceID": 24100
+        }
+    ]
 }

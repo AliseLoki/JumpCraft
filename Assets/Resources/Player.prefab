@@ -575,7 +575,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 3624684386958651426}
-  _currentPlayerViewSO: {fileID: 11400000, guid: 29c3e96e860e6784894669df0d350b6b, type: 2}
+  _defaultPlayerViewSO: {fileID: 11400000, guid: 29c3e96e860e6784894669df0d350b6b, type: 2}
   _crown: {fileID: 8319490109932014498}
   _material: {fileID: 2100000, guid: 54e493169eba2bd4aa0795a37608769e, type: 2}
   _allAccessablePlayerViewsSO:

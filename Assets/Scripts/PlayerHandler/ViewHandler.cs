@@ -1,32 +1,31 @@
-using System.Collections.Generic;
 using UnityEngine;
+using YG;
 
 public class ViewHandler : MonoBehaviour
 {
     private const string Piglin = "Piglin";
 
-    [SerializeField] private Player _player;
-    [SerializeField] private PlayerViewSO _currentPlayerViewSO;
     [SerializeField] private Transform _crown;
     [SerializeField] private Material _material;
 
-    [SerializeField] private List<PlayerViewSO> _allAccessablePlayerViewsSO;
-
     public void InitDefaultView()
     {
-        _material.mainTexture = _currentPlayerViewSO.ViewImage;
+        _material.mainTexture = YG2.saves.CurrentPlayerViewSO.ViewImage;
+        _crown.gameObject.SetActive(CheckIfPig(YG2.saves.CurrentPlayerViewSO));
     }
 
     public void InitNewView(PlayerViewSO playerViewSO)
     {
-        if (_currentPlayerViewSO != playerViewSO)
+        if (YG2.saves.CurrentPlayerViewSO != playerViewSO)
         {
             if (!CheckIfPlayerViewSOExist(playerViewSO))
             {
-                _allAccessablePlayerViewsSO.Add(playerViewSO);
+                YG2.saves.AvailableViews.Add(playerViewSO);             
             }
 
-            _currentPlayerViewSO = playerViewSO;
+            YG2.saves.CurrentPlayerViewSO = playerViewSO;
+            YG2.SaveProgress();
+
             _material.mainTexture = playerViewSO.ViewImage;
             _crown.gameObject.SetActive(CheckIfPig(playerViewSO));
         }
@@ -40,7 +39,7 @@ public class ViewHandler : MonoBehaviour
 
     private bool CheckIfPlayerViewSOExist(PlayerViewSO playerViewSO)
     {
-        foreach (var item in _allAccessablePlayerViewsSO) if (item == playerViewSO) return true;
+        foreach (var item in YG2.saves.AvailableViews) if (item == playerViewSO) return true;
         return false;
     }
 }

@@ -13,6 +13,7 @@ public class UIHandler : MonoBehaviour
     [SerializeField] private TMP_Text _scoreText;
     [SerializeField] private Image _jumpPowerScaleImage;
     [SerializeField] private Button _restartButton;
+    [SerializeField] private Button _startButton;
 
     private Player _player;
     private PlatformsController _platformsController;
@@ -20,6 +21,7 @@ public class UIHandler : MonoBehaviour
     [Header("JumpPower Values")]
     [SerializeField] float _minValue = 3;
     [SerializeField] float _divider = 10;
+    // вот здесь подправить в зависимости от установленных в тесте
 
     private void OnDisable()
     {
@@ -45,6 +47,14 @@ public class UIHandler : MonoBehaviour
         _platformsController.ScoreController.ScoreChanged += OnScoreChanged;
         _player.JumpHandler.JumpPowerChanged += OnPlayerJumpPowerChanged;
     }
+    //убрать потом
+    public void TestDeleteSavesButton()
+    {
+        YG2.SetDefaultSaves();
+        ShowNewValue(_diamondsAmountText, YG2.saves.DiamondsAmount);
+        YG2.SaveProgress();
+        print(YG2.saves.CurrentPlayerViewSO);
+    }
 
     private void OnRestartButtonPressed()
     {
@@ -58,7 +68,7 @@ public class UIHandler : MonoBehaviour
     }
 
     private void OnCollectablesAmountChanged()
-    {// вынести в отдельный метод и класс
+    {
         YG2.saves.DiamondsAmount++;
         YG2.SaveProgress();
         ShowNewValue(_diamondsAmountText, YG2.saves.DiamondsAmount);
