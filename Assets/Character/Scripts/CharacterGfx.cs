@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class CharacterGfx : MonoBehaviour
 {
@@ -27,9 +26,9 @@ public class CharacterGfx : MonoBehaviour
 
     private void Update()
     {
-        if(!controller) return;
-        
-        animator.SetFloat("Power", controller.GetCurrentPower/controller.GetMaxJumpPower);
+        if (!controller) return;
+
+        animator.SetFloat("Power", controller.GetCurrentPower / controller.GetMaxJumpPower);
     }
 
     private void PrepareJump()

@@ -14,20 +14,14 @@ public class PlatformsController : MonoBehaviour
 
     [SerializeField] private Transform _defaultPosition;
 
-    //private float _minOffset = 5;
-    //private float _maxOffset = 8;
+    private float _minOffset = 6;//6
+    private float _maxOffset = 9;//9
 
-    //private float _minHeightOffset = 0;
-    //private float _maxHeightOffset = 3;
-
-    // private Vector3 _centerBetweenFirstAndSecondPlatform;
+    private float _minHeightOffset = 0;//0
+    private float _maxHeightOffset = 6;//6
 
     private PlatformsScoreController _scoreController;
-
     public PlatformsScoreController ScoreController => _scoreController;
-
-    //public Vector3 Center => _centerBetweenFirstAndSecondPlatform;
-
     // временно!!
     public event Action<Vector3> CenterChanged;
 
@@ -48,6 +42,17 @@ public class PlatformsController : MonoBehaviour
     }
 
     private void OnPlayerJumpedOnPlatform(Platform platform)
+    {
+        InitPlatforms(platform);
+
+        if (platform.CheckIfPlayerOnTrampoline(_player.transform.position.x, _player.transform.position.z))
+        {
+            if (platform.IsGreen) _player.JumpHandler.TrampolineJump(_firstPlatform);
+            else _player.JumpHandler.RedTrampolineJump(_firstPlatform);
+        }
+    }
+
+    private void InitPlatforms(Platform platform)
     {
         if (platform == _firstPlatform)
         {
@@ -84,7 +89,7 @@ public class PlatformsController : MonoBehaviour
     {
         var newPlatfrorm = _objectsPool.GetPooledObject(_objectsPool.Platforms, _objectsPool.PlatformToPool,
             CalculatePlatformPos(_defaultPosition,
-            CalculateRandomValue(Semen.Instance.MinOffsetForSpawnPlatform, Semen.Instance.MaxOffsetForSpawnPlatform), 0)) as Platform;
+            CalculateRandomValue(_minOffset, _maxOffset), 0)) as Platform;
         _defaultPosition = newPlatfrorm.transform;
         newPlatfrorm.Init(_scoreController);
         return newPlatfrorm;
@@ -92,7 +97,7 @@ public class PlatformsController : MonoBehaviour
 
     private Vector3 CalculatePlatformPos(Transform defaultPos, float offsetX, float offsetZ)
     {
-        float randomHeight = CalculateRandomValue(Semen.Instance.PlatformsMinHeight, Semen.Instance.PlatformsMaxHeight);
+        float randomHeight = CalculateRandomValue(_minHeightOffset, _maxHeightOffset);
         return new Vector3(defaultPos.position.x + offsetX, randomHeight, defaultPos.position.z + offsetZ);
     }
 

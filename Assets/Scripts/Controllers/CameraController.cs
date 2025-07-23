@@ -2,7 +2,12 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    private const float MobileFOV = 40f;
+    private const float DesktopFOV = 60f;
+
     [SerializeField] private ShopView _shopView;
+
+    private float _currentFOV;
 
     private Player _player;
 
@@ -16,28 +21,28 @@ public class CameraController : MonoBehaviour
     {
         if (_shopView.gameObject.activeSelf)
         {
-            SetPosition(_offsetForOpenShop, _rotationForOpenShop);
+            SetPosition(_offsetForOpenShop, _rotationForOpenShop, DesktopFOV);
         }
         else
         {
-            SetPosition(_offset, _defaultRotation);
+            SetPosition(_offset, _defaultRotation,_currentFOV);
         }
     }
 
-    public void Init(Player player)
+    public void Init(Player player, bool isMobile)
     {
         _player = player;
-        SetPosition(_defaultPosition, _defaultRotation);
+
+        if (isMobile) _currentFOV = MobileFOV;
+        else _currentFOV = DesktopFOV;
+
+        SetPosition(_defaultPosition, _defaultRotation, _currentFOV);
     }
 
-    private void SetPosition(Vector3 offset, Vector3 rotation)
+    private void SetPosition(Vector3 offset, Vector3 rotation, float fov)
     {
         transform.position = _player.transform.position + offset;
         transform.eulerAngles = rotation;
+        Camera.main.fieldOfView = fov;
     }
-
-    //private Vector3 CalculateOffset(Vector3 thisPosition, Vector3 playerPosition)
-    //{
-    //    return thisPosition - playerPosition;
-    //}
 }

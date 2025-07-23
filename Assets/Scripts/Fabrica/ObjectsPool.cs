@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ObjectsPool : MonoBehaviour
 {
-    [SerializeField] private int _amountToPool = 5;
+    [SerializeField] private int _amountToPool = 10;
 
     private Interactable _coinToPool;
     private Interactable _platformToPool;

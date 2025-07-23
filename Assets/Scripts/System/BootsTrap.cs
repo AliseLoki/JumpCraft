@@ -1,12 +1,13 @@
-using System.Collections.Generic;
 using UnityEngine;
+using YG;
 
 public class BootsTrap : MonoBehaviour
 {
     [SerializeField] private CameraController _mainCamera;
+    [SerializeField] private UIHandler _ui;
+
     [SerializeField] private ShopView _shopView;
     [SerializeField] private SoundController _soundController;
-    [SerializeField] private UIHandler _ui;
 
     private Player _player;
     private Fabrica _fabrica;
@@ -33,12 +34,18 @@ public class BootsTrap : MonoBehaviour
 
     private void InitReferences()
     {
-        _mainCamera.Init(_player);
+        _mainCamera.Init(_player, CheckDevice());
         _objectsPool.Init(_fabrica);
         _platformsController.Init(_objectsPool, _player);
         _collectablesController.Init(_platformsController, _objectsPool);
         _player.Init(_shopView, _soundController);
         _ui.Init(_player, _fabrica, _platformsController);
+    }
+
+    private bool CheckDevice()
+    {
+        if (YG2.envir.isMobile || YG2.envir.isTablet) return true;
+        return false;
     }
 
     private void StartgameProcess()

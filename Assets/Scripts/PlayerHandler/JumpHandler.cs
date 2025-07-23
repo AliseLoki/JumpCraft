@@ -7,12 +7,13 @@ public class JumpHandler : MonoBehaviour
 {
     private const int NumJumps = 1;
 
-    [SerializeField] private int _jumpPower = 3;
-   // [SerializeField] private int _minJumpPower = 3;
-    //[SerializeField] private int _maxJumpPower = 13;
-   // [SerializeField] private float _pauseBetweenIncreasingJumpPower = 0.2f;
-   // [SerializeField] private float _duration = 1;
-    //[SerializeField] private float _jumpHeight = 0;
+    private float _jumpPower = 3;
+    private int _minJumpPower = 3;
+    private int _maxJumpPower = 13;
+    private float _pauseBetweenIncreasingJumpPower = 0.2f;
+    private float _duration = 0.5f;
+    private float _jumpHeight = 3;
+    private float _platformsOffset = 3f;
 
     [SerializeField] private Player _player;
 
@@ -27,7 +28,7 @@ public class JumpHandler : MonoBehaviour
 
     public float GetCurrentPower => _jumpPower;
 
-    public float GetMaxJumpPower => Semen.Instance.MaxJumpPower;
+    public float GetMaxJumpPower => _maxJumpPower;
 
     public void IncreaseJumpPower()
     {
@@ -41,7 +42,7 @@ public class JumpHandler : MonoBehaviour
     {
         if (_player.CollisionHandler.IsGrounded)
         {
-            JumpDefault(_jumpPower, 0);          
+            JumpDefault(_jumpPower, 0);
         }
     }
 
@@ -50,15 +51,30 @@ public class JumpHandler : MonoBehaviour
         OnLand?.Invoke();
     }
 
+    public void RedTrampolineJump(Platform firstPlatform)
+    {
+        float random = UnityEngine.Random.Range(firstPlatform.transform.position.x, firstPlatform.transform.position.x + Semen.Instance.RedTrampolineSuccessfullJump);
+
+        transform.DOJump(new Vector3(random, firstPlatform.transform.position.y + _platformsOffset,
+          firstPlatform.transform.position.z), _jumpHeight, NumJumps, _duration);
+    }
+
+
+    public void TrampolineJump(Platform firstPlatform)
+    {
+        transform.DOJump(new Vector3(firstPlatform.transform.position.x, firstPlatform.transform.position.y + _platformsOffset,
+            firstPlatform.transform.position.z), _jumpHeight, NumJumps, _duration);
+    }
+
     private void JumpDefault(float jumpPowerX, float jumpPowerZ)
     {
         OnJump?.Invoke();
 
-        transform.DOJump(new Vector3(transform.position.x + jumpPowerX, transform.position.y + Semen.Instance.MinJumpPower,
-            transform.position.z + jumpPowerZ), Semen.Instance.JumpHeight, NumJumps, Semen.Instance.JumpDuration);
+        transform.DOJump(new Vector3(transform.position.x + jumpPowerX, transform.position.y + _platformsOffset,
+            transform.position.z + jumpPowerZ), _jumpHeight, NumJumps, _duration);
 
         if (_coroutine != null) StopCoroutine(_coroutine);
-        SetJumpPower(Semen.Instance.MinJumpPower);
+        SetJumpPower(_minJumpPower);
     }
 
     private IEnumerator JumpPowerIncreaser()
@@ -68,18 +84,18 @@ public class JumpHandler : MonoBehaviour
             _player.SoundController.PlaySound(SoundName.JumpPowerUp.ToString());
             OnPrepareJump?.Invoke();
 
-            for (int i = Semen.Instance.MinJumpPower; i <= Semen.Instance.MaxJumpPower; i++)
+            for (int i = _minJumpPower; i <= _maxJumpPower; i++)
             {
                 SetJumpPower(i);
-                yield return new WaitForSeconds(Semen.Instance._pauseBetweenIncreasingJumpPower);
+                yield return new WaitForSeconds(_pauseBetweenIncreasingJumpPower);
             }
 
             _player.SoundController.PlaySound(SoundName.JumpPowerDown.ToString());
 
-            for (int i = Semen.Instance.MaxJumpPower; i >= Semen.Instance.MinJumpPower; i--)
+            for (int i = _maxJumpPower; i >= _minJumpPower; i--)
             {
                 SetJumpPower(i);
-                yield return new WaitForSeconds(Semen.Instance._pauseBetweenIncreasingJumpPower);
+                yield return new WaitForSeconds(_pauseBetweenIncreasingJumpPower);
             }
         }
     }

@@ -1258,14 +1258,10 @@ MonoBehaviour:
       de: 0
       hi: 0
     fonts:
-      defaultFont:
-      - {fileID: 12800000, guid: 997a43b767814dd0a7642ec9b78cba41, type: 3}
-      ru:
-      - {fileID: 12800000, guid: 997a43b767814dd0a7642ec9b78cba41, type: 3}
-      en:
-      - {fileID: 12800000, guid: 997a43b767814dd0a7642ec9b78cba41, type: 3}
-      tr:
-      - {fileID: 12800000, guid: 997a43b767814dd0a7642ec9b78cba41, type: 3}
+      defaultFont: []
+      ru: []
+      en: []
+      tr: []
       az: []
       be: []
       he: []
@@ -1291,12 +1287,9 @@ MonoBehaviour:
       de: []
       hi: []
     fontsTMP:
-      defaultFont:
-      - {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
-      ru:
-      - {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
-      en:
-      - {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+      defaultFont: []
+      ru: []
+      en: []
       tr: []
       az: []
       be: []
@@ -1323,7 +1316,7 @@ MonoBehaviour:
       de: []
       hi: []
     fontsSizeCorrect:
-      ru: 00000000
+      ru: 
       en: 
       tr: 
       az: 
@@ -2383,7 +2376,7 @@ MonoBehaviour:
   _scoreText: {fileID: 7318200797869592465}
   _jumpPowerScaleImage: {fileID: 3924083502290387200}
   _restartButton: {fileID: 5354589310203285425}
-  _startButton: {fileID: 0}
+  _startButton: {fileID: 7289002641765563758}
   _minValue: 3
   _divider: 10
 --- !u!114 &3713192572919268744
@@ -2432,14 +2425,10 @@ MonoBehaviour:
       de: 0
       hi: 0
     fonts:
-      defaultFont:
-      - {fileID: 12800000, guid: 997a43b767814dd0a7642ec9b78cba41, type: 3}
-      ru:
-      - {fileID: 12800000, guid: 997a43b767814dd0a7642ec9b78cba41, type: 3}
-      en:
-      - {fileID: 12800000, guid: 997a43b767814dd0a7642ec9b78cba41, type: 3}
-      tr:
-      - {fileID: 12800000, guid: 997a43b767814dd0a7642ec9b78cba41, type: 3}
+      defaultFont: []
+      ru: []
+      en: []
+      tr: []
       az: []
       be: []
       he: []
@@ -2465,12 +2454,9 @@ MonoBehaviour:
       de: []
       hi: []
     fontsTMP:
-      defaultFont:
-      - {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
-      ru:
-      - {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
-      en:
-      - {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+      defaultFont: []
+      ru: []
+      en: []
       tr: []
       az: []
       be: []
@@ -2497,7 +2483,7 @@ MonoBehaviour:
       de: []
       hi: []
     fontsSizeCorrect:
-      ru: 00000000
+      ru: 
       en: 
       tr: 
       az: 
@@ -2564,9 +2550,9 @@ MonoBehaviour:
   uniqueFont: {fileID: 0}
   additionalText: {fileID: 0}
   textHeight: 20
-  processTranslateLabel: 3/3 completed
-  componentTextField: 0
-  countLang: 3
+  processTranslateLabel: 0/19 completed
+  componentTextField: 1
+  countLang: 0
 --- !u!114 &3748140180516118701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3067,7 +3053,7 @@ MonoBehaviour:
   uniqueFont: {fileID: 0}
   additionalText: {fileID: 0}
   textHeight: 20
-  processTranslateLabel: 0/3 completed
+  processTranslateLabel: 0/19 completed
   componentTextField: 1
   countLang: 0
 --- !u!1 &4360906254046221813

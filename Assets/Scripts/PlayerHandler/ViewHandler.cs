@@ -5,11 +5,18 @@ public class ViewHandler : MonoBehaviour
 {
     private const string Piglin = "Piglin";
 
+    [SerializeField] private PlayerViewSO _defaultPlayerViewSO;
     [SerializeField] private Transform _crown;
     [SerializeField] private Material _material;
-
+    
     public void InitDefaultView()
     {
+        if(YG2.saves.CurrentPlayerViewSO == null)
+        {
+            YG2.saves.CurrentPlayerViewSO = _defaultPlayerViewSO;
+            YG2.saves.AvailableViews.Add(YG2.saves.CurrentPlayerViewSO);
+        }
+
         _material.mainTexture = YG2.saves.CurrentPlayerViewSO.ViewImage;
         _crown.gameObject.SetActive(CheckIfPig(YG2.saves.CurrentPlayerViewSO));
     }
