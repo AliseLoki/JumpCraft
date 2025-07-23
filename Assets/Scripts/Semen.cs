@@ -17,11 +17,11 @@ public class Semen : MonoBehaviour
     // физические границы платформы (5, 3, 5);
 
     [Header("ProbabilityOfEvent")]
-    public int TrampolineSpawnChance = 3;
+    public int TrampolineSpawnChance = 5;
     public int ColorTrampolineSpawnChance = 2;
     public int DiamondSpawnChance = 3;
-    public int RedTrampolineSuccessfullJump = 10;
-
+    public int HeartSpawnChance = 3; // но шанс получается меньше так как платформ контроллер проверяет есть ли батут и только тогда спаунит
+    public int RedTrampolineSuccessfullJump = 3;
 
     public static Semen Instance { get; private set; }
 

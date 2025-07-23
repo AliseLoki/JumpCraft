@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlatformsController : MonoBehaviour
 {
     private Player _player;
+    private CollectablesController _collectablesController;
 
     private Platform _firstPlatform;
     private Platform _secondPlatform;
@@ -25,16 +26,17 @@ public class PlatformsController : MonoBehaviour
 
     public Platform CurrentPlatform => _currentPlatform;
     // временно!!
-    public event Action<Vector3> CenterChanged;
+    //public event Action<Vector3> CenterChanged;
 
     private void OnDisable()
     {
         _player.CollisionHandler.PlayerJumpedOnPlatform -= OnPlayerJumpedOnPlatform;
     }
 
-    public void Init(ObjectsPool pool, Player player)
+    public void Init(ObjectsPool pool, Player player, CollectablesController collectablesController)
     {
         _defaultPosition = transform;
+        _collectablesController = collectablesController;
         _scoreController = new PlatformsScoreController();
         _objectsPool = pool;
         _currentPlatform = _objectsPool.GetPooledObject(_objectsPool.Platforms, _objectsPool.PlatformToPool, new Vector3(0, 3.1f, 0)) as Platform;
@@ -46,6 +48,10 @@ public class PlatformsController : MonoBehaviour
     private void OnPlayerJumpedOnPlatform(Platform platform)
     {
         InitPlatforms(platform);
+
+        if (!_secondPlatform.Trampoline.gameObject.activeSelf) _collectablesController.SpawnHeart(_secondPlatform.transform.position);
+
+        _collectablesController.SpawnDiamond(CalculateCenterBetweenPlatforms(_firstPlatform, _secondPlatform));
 
         if (platform.CheckIfPlayerOnTrampoline(_player.transform.position.x, _player.transform.position.z))
         {
@@ -72,8 +78,6 @@ public class PlatformsController : MonoBehaviour
         }
 
         if (_defaultPlatform != null) _defaultPlatform.gameObject.SetActive(false);
-
-        CenterChanged?.Invoke(CalculateCenterBetweenPlatforms(_firstPlatform, _secondPlatform));
     }
 
     private Vector3 CalculateCenterBetweenPlatforms(Platform first, Platform second)

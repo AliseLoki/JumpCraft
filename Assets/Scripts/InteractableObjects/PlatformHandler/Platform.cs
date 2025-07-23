@@ -11,9 +11,12 @@ public class Platform : Interactable
 
     private bool _isGreen = true;
     private int _bonusScore;
+
     private PlatformsScoreController _scoreController;
 
     public bool IsGreen =>_isGreen;
+
+    public Trampoline Trampoline => _trampoline;
 
     private void OnEnable()
     {

@@ -28,7 +28,7 @@ public class BootsTrap : MonoBehaviour
         _fabrica = CreateEmptyObjectWithScript<Fabrica>(nameof(Fabrica));
         _objectsPool = CreateEmptyObjectWithScript<ObjectsPool>(nameof(ObjectsPool));
         _platformsController = CreateEmptyObjectWithScript<PlatformsController>(nameof(PlatformsController));
-        _collectablesController = CreateEmptyObjectWithScript<CollectablesController>(nameof(CollectablesController));
+        _collectablesController = new CollectablesController();
         _player = _fabrica.CreatePrefab(_fabrica.GetPrefabLinkFromFolder<Player>(nameof(Player)));
     }
 
@@ -36,8 +36,8 @@ public class BootsTrap : MonoBehaviour
     {
         _mainCamera.Init(_player, CheckDevice());
         _objectsPool.Init(_fabrica);
-        _platformsController.Init(_objectsPool, _player);
-        _collectablesController.Init(_platformsController, _objectsPool);
+        _platformsController.Init(_objectsPool, _player, _collectablesController);
+        _collectablesController.Init( _objectsPool);
         _player.Init(_shopView, _soundController, _platformsController, _ui);
         _ui.Init(_player, _fabrica, _platformsController);
     }
@@ -52,7 +52,6 @@ public class BootsTrap : MonoBehaviour
     {
         _player.StartGame();
         _ui.StartGame();
-        _collectablesController.StartGame();
     }
 
     private T CreateEmptyObjectWithScript<T>(string name) where T : MonoBehaviour

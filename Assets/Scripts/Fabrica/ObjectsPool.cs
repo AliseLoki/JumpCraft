@@ -7,23 +7,30 @@ public class ObjectsPool : MonoBehaviour
 
     private Interactable _coinToPool;
     private Interactable _platformToPool;
+    private Interactable _heartToPool;
 
     private List<Interactable> _coins = new();
     private List<Interactable> _platforms = new();
+    private List<Interactable> _hearts = new();
 
     private Fabrica _fabrica;
 
     public Interactable CoinToPool => _coinToPool;
     public Interactable PlatformToPool => _platformToPool;
 
+    public Interactable Heart => _heartToPool;
+
     public List<Interactable> Coins => _coins;
     public List<Interactable> Platforms => _platforms;
+
+    public List<Interactable> Hearts => _hearts;
 
     public void Init(Fabrica fabrica)
     {
         _fabrica = fabrica;
         _coinToPool = _fabrica.GetPrefabLinkFromFolder<Diamond>(nameof(Diamond));
         _platformToPool = _fabrica.GetPrefabLinkFromFolder<Platform>(nameof(Platform));
+        _heartToPool = _fabrica.GetPrefabLinkFromFolder<Heart>(nameof(Heart));
         InitContainers();
     }
 
@@ -55,6 +62,7 @@ public class ObjectsPool : MonoBehaviour
     {
         CreatePrefabsInPool(_coins, _coinToPool);
         CreatePrefabsInPool(_platforms, _platformToPool);
+        CreatePrefabsInPool(_hearts, _heartToPool);
     }
 
     private void CreatePrefabsInPool(List<Interactable> pool, Interactable prefab)

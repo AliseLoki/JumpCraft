@@ -1,5 +1,5 @@
 using UnityEngine;
 
-public class Heart : MonoBehaviour
+public class Heart : Interactable
 {
 }

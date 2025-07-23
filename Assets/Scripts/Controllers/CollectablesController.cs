@@ -1,32 +1,31 @@
 using UnityEngine;
 
-public class CollectablesController : MonoBehaviour
+public class CollectablesController
 {
-    [SerializeField] private float _collectablesPosYOffset = 7;
+    private float _collectablesPosYOffset = 7;
+    private float _heartsOffset = 2;
 
     private ObjectsPool _pool;
-    private PlatformsController _platformsController;
 
-    private void OnDisable()
+    public void Init(ObjectsPool objectsPool)
     {
-        _platformsController.CenterChanged -= OnCenterChanged;
-    }
-
-    public void Init(PlatformsController platformsController, ObjectsPool objectsPool)
-    {
-        _platformsController = platformsController;
         _pool = objectsPool;
     }
 
-    public void StartGame()
+    public void SpawnHeart(Vector3 pos)
     {
-        _platformsController.CenterChanged += OnCenterChanged;
+        int chance = Random.Range(0, Semen.Instance.HeartSpawnChance);
+
+        if (chance == 0)
+        {
+            var newHeart = _pool.GetPooledObject(_pool.Hearts, _pool.Heart, new Vector3(pos.x, pos.y + _heartsOffset, pos.z));
+        }
     }
 
-    private void OnCenterChanged(Vector3 pos)
+    public void SpawnDiamond(Vector3 pos)
     {
         int chance = Random.Range(0, Semen.Instance.DiamondSpawnChance);
-       
+
         if (chance == 0)
         {
             var newDiamond = _pool.GetPooledObject(_pool.Coins, _pool.CoinToPool, new Vector3(pos.x, pos.y + _collectablesPosYOffset, pos.z));
