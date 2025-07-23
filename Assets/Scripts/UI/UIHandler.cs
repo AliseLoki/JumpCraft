@@ -53,7 +53,7 @@ public class UIHandler : MonoBehaviour
     {
         SetStartButtonActive();
         FillInHealth();
-        
+
         ShowNewValue(_diamondsAmountText, YG2.saves.DiamondsAmount);
         SetJumpPowerScaleAmount(0);
 
