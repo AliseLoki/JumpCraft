@@ -12,8 +12,8 @@ public class JumpHandler : MonoBehaviour
     private int _maxJumpPower = 13;
     private float _pauseBetweenIncreasingJumpPower = 0.2f;
     private float _duration = 0.5f;
-    private float _jumpHeight = 6;
-    private float _platformsOffset = 3f;
+    private float _jumpHeight = 3;
+    private float _platformsOffset = 9f; // офсет платформы + макс высота спауна
 
     [SerializeField] private Player _player;
 
