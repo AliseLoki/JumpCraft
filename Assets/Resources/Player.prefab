@@ -535,6 +535,7 @@ MonoBehaviour:
   _collisionHandler: {fileID: 4748769542158848367}
   _jumpHandler: {fileID: 8274507649543375361}
   _viewHandler: {fileID: 3303468398515672170}
+  _health: {fileID: -2689587539728273181}
 --- !u!114 &4748769542158848367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -586,7 +587,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -651,7 +652,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51181355cc8ec5c41ae8fac427cbd0f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 3624684386958651426}
 --- !u!1 &3915446446677379536
 GameObject:
   m_ObjectHideFlags: 0

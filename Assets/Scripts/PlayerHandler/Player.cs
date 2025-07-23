@@ -10,17 +10,17 @@ public class Player : MonoBehaviour
     [SerializeField] private CollisionHandler _collisionHandler;
     [SerializeField] private JumpHandler _jumpHandler;
     [SerializeField] private ViewHandler _viewHandler;
+    [SerializeField] private Health _health;
 
     public event Action CollectablesAmountChanged;
 
     public CollisionHandler CollisionHandler => _collisionHandler;
     public JumpHandler JumpHandler => _jumpHandler;
-
     public SoundController SoundController => _soundController;
-
     public PlatformsController PlatformsController => _platformsController;
-
     public ShopView ShopView => _shopView;
+
+    public Health Health => _health;
 
     private void OnDisable()
     {

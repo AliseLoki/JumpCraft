@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using YG;
@@ -9,6 +10,8 @@ public class Health : MonoBehaviour
 
     private float _deathPosY = 0;
 
+    public event Action HealthChanged;
+
     private void Update()
     {
         if (transform.position.y < _deathPosY)
@@ -19,24 +22,30 @@ public class Health : MonoBehaviour
 
     private void CheckHealth()
     {
+        Debug.Log(YG2.saves.Health);
+
+
         if (YG2.saves.Health <= _minHealth)
         {
             Die();
         }
         else
         {
+            ChangeHealth(-1);
+            YG2.SaveProgress();
             Rise();
-            ChangeHealth(-_minHealth);
         }
     }
 
-    private void ChangeHealth(int healthChangeValue)
+    public void ChangeHealth(int healthChangeValue)
     {
-        YG2.saves.Health = Mathf.Clamp(YG2.saves.Health + healthChangeValue, _minHealth, _maxHealth);
+        YG2.saves.Health = Mathf.Clamp(YG2.saves.Health + healthChangeValue, 0, _maxHealth);
+        HealthChanged?.Invoke();
     }
 
     private void Rise()
     {
+
         SceneManager.LoadScene(0);
     }
 

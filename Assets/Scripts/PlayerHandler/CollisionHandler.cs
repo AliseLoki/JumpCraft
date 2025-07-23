@@ -36,5 +36,11 @@ public class CollisionHandler : MonoBehaviour
             _player.ChangeCollectablesAmount();
             diamond.gameObject.SetActive(false);
         }
+
+        if (other.TryGetComponent(out Heart heart))
+        {
+            _player.Health.ChangeHealth(1);
+            heart.gameObject.SetActive(false);
+        }
     }
 }

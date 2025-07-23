@@ -53,18 +53,13 @@ public class JumpHandler : MonoBehaviour
 
     public void RedTrampolineJump(Platform firstPlatform)
     {
-        //float random = UnityEngine.Random.Range(firstPlatform.transform.position.x, firstPlatform.transform.position.x + Semen.Instance.RedTrampolineSuccessfullJump);
-
-        //transform.DOJump(new Vector3(random, firstPlatform.transform.position.y + _platformsOffset,
-        //  firstPlatform.transform.position.z), _jumpHeight, NumJumps, _duration);
         transform.DOJump(firstPlatform.transform.position + SetRandomPos() + new Vector3(0, 3, 0), _jumpHeight, NumJumps, _duration);
-
     }
 
 
     public void TrampolineJump(Platform firstPlatform)
     {
-        transform.DOJump(new Vector3(firstPlatform.transform.position.x, firstPlatform.transform.position.y + _platformsOffset,
+        transform.DOJump(new Vector3(firstPlatform.transform.position.x, firstPlatform.transform.position.y + _jumpHeight,
             firstPlatform.transform.position.z), _jumpHeight, NumJumps, _duration);
     }
 
