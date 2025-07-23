@@ -22,6 +22,8 @@ public class PlatformsController : MonoBehaviour
 
     private PlatformsScoreController _scoreController;
     public PlatformsScoreController ScoreController => _scoreController;
+
+    public Platform CurrentPlatform => _currentPlatform;
     // временно!!
     public event Action<Vector3> CenterChanged;
 

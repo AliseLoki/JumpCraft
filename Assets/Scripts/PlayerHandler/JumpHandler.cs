@@ -12,7 +12,7 @@ public class JumpHandler : MonoBehaviour
     private int _maxJumpPower = 13;
     private float _pauseBetweenIncreasingJumpPower = 0.2f;
     private float _duration = 0.5f;
-    private float _jumpHeight = 3;
+    private float _jumpHeight = 6;
     private float _platformsOffset = 3f;
 
     [SerializeField] private Player _player;
@@ -53,10 +53,12 @@ public class JumpHandler : MonoBehaviour
 
     public void RedTrampolineJump(Platform firstPlatform)
     {
-        float random = UnityEngine.Random.Range(firstPlatform.transform.position.x, firstPlatform.transform.position.x + Semen.Instance.RedTrampolineSuccessfullJump);
+        //float random = UnityEngine.Random.Range(firstPlatform.transform.position.x, firstPlatform.transform.position.x + Semen.Instance.RedTrampolineSuccessfullJump);
 
-        transform.DOJump(new Vector3(random, firstPlatform.transform.position.y + _platformsOffset,
-          firstPlatform.transform.position.z), _jumpHeight, NumJumps, _duration);
+        //transform.DOJump(new Vector3(random, firstPlatform.transform.position.y + _platformsOffset,
+        //  firstPlatform.transform.position.z), _jumpHeight, NumJumps, _duration);
+        transform.DOJump(firstPlatform.transform.position + SetRandomPos() + new Vector3(0, 3, 0), _jumpHeight, NumJumps, _duration);
+
     }
 
 
@@ -98,6 +100,15 @@ public class JumpHandler : MonoBehaviour
                 yield return new WaitForSeconds(_pauseBetweenIncreasingJumpPower);
             }
         }
+    }
+
+    private Vector3 SetRandomPos()
+    {
+        int random = UnityEngine.Random.Range(0, 3);
+
+        if (random == 0) return new Vector3(0, 0, 0);
+        else if (random == 1) return new Vector3(0, 0, 6);
+        else return new Vector3(0, 0, -6);
     }
 
     private void SetJumpPower(int jumpPower)

@@ -17,7 +17,7 @@ public class Semen : MonoBehaviour
     // физические границы платформы (5, 3, 5);
 
     [Header("ProbabilityOfEvent")]
-    public int TrampolineSpawnChance = 2;
+    public int TrampolineSpawnChance = 3;
     public int ColorTrampolineSpawnChance = 2;
     public int DiamondSpawnChance = 3;
     public int RedTrampolineSuccessfullJump = 10;
