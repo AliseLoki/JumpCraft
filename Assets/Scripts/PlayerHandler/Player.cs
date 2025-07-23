@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+
+    private UIHandler _ui;
     private ShopView _shopView;
     private SoundController _soundController;
     private PlatformsController _platformsController;
@@ -20,6 +22,8 @@ public class Player : MonoBehaviour
     public PlatformsController PlatformsController => _platformsController;
     public ShopView ShopView => _shopView;
 
+    public UIHandler UIHandler => _ui;
+
     public Health Health => _health;
 
     private void OnDisable()
@@ -27,11 +31,12 @@ public class Player : MonoBehaviour
         _shopView.PlayerViewChanged -= OnPlayerViewChanged;
     }
 
-    public void Init(ShopView shopView, SoundController contr, PlatformsController plContr)
+    public void Init(ShopView shopView, SoundController contr, PlatformsController plContr, UIHandler ui)
     {
         _shopView = shopView;
         _soundController = contr;
         _platformsController = plContr;
+        _ui = ui;
     }
 
     public void StartGame()

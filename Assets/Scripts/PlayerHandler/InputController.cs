@@ -6,7 +6,7 @@ public class InputController : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!_player.ShopView.isActiveAndEnabled)
+        if (_player.UIHandler.IsGamePlaying)
         {
             _player.JumpHandler.IncreaseJumpPower();
         }
@@ -14,7 +14,7 @@ public class InputController : MonoBehaviour
 
     private void OnMouseUp()
     {
-        if (!_player.ShopView.isActiveAndEnabled)
+        if (_player.UIHandler.IsGamePlaying)
         {
             _player.SoundController.StopSound();
             _player.JumpHandler.Jump();

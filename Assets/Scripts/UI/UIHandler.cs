@@ -9,10 +9,12 @@ public class UIHandler : MonoBehaviour
     [SerializeField] private SoundController _soundController;
     [SerializeField] private ShopView _shopView;
 
+    [SerializeField] private TMP_Text _educationText;
     [SerializeField] private TMP_Text _diamondsAmountText;
     [SerializeField] private TMP_Text _scoreText;
+
     [SerializeField] private Image _jumpPowerScaleImage;
-    [SerializeField] private Button _restartButton;
+
     [SerializeField] private Button _startButton;
 
     [SerializeField] private Transform _healthContainer;
@@ -22,15 +24,18 @@ public class UIHandler : MonoBehaviour
     private Player _player;
     private PlatformsController _platformsController;
 
+    private bool _isGamePlaying = false;
+
     [Header("JumpPower Values")]
     [SerializeField] float _minValue = 3;
     [SerializeField] float _divider = 10;
     // вот здесь подправить в зависимости от установленных в тесте
 
+    public bool IsGamePlaying => _isGamePlaying;
+
     private void OnDisable()
     {
         _player.CollectablesAmountChanged -= OnCollectablesAmountChanged;
-        _restartButton.onClick.RemoveListener(OnRestartButtonPressed);
         _platformsController.ScoreController.ScoreChanged -= OnScoreChanged;
         _player.JumpHandler.JumpPowerChanged -= OnPlayerJumpPowerChanged;
         _player.Health.HealthChanged -= OnHealthChanged;
@@ -46,11 +51,12 @@ public class UIHandler : MonoBehaviour
 
     public void StartGame()
     {
+        SetStartButtonActive();
         FillInHealth();
-
+        
         ShowNewValue(_diamondsAmountText, YG2.saves.DiamondsAmount);
         SetJumpPowerScaleAmount(0);
-        _restartButton.onClick.AddListener(OnRestartButtonPressed);
+
         _player.CollectablesAmountChanged += OnCollectablesAmountChanged;
         _platformsController.ScoreController.ScoreChanged += OnScoreChanged;
         _player.JumpHandler.JumpPowerChanged += OnPlayerJumpPowerChanged;
@@ -64,18 +70,38 @@ public class UIHandler : MonoBehaviour
         YG2.SaveProgress();
     }
 
+    public void OnStartButtonPressed()
+    {
+        _isGamePlaying = true;
+        _educationText.gameObject.SetActive(false);
+        _startButton.gameObject.SetActive(false);
+    }
+
+    public void OpenShop()
+    {
+        _shopView.gameObject.SetActive(true);
+        _isGamePlaying = false;
+    }
+
+    public void CloseShop()
+    {
+        _shopView.gameObject.SetActive(false);
+        _isGamePlaying = true;
+    }
+
+    private void SetStartButtonActive()
+    {
+        _isGamePlaying = false;
+        _startButton.gameObject.SetActive(true);
+        _educationText.gameObject.SetActive(true);
+    }
+
     private void FillInHealth()
     {
         for (int i = 0; i < YG2.saves.Health; i++)
         {
             var newHeart = _fabrica.CreatePrefab(_heartView, Quaternion.identity, _healthContainer);
         }
-    }
-
-    private void OnRestartButtonPressed()
-    {
-        YG2.InterstitialAdvShow();
-        SceneManager.LoadScene(0);
     }
 
     private void OnPlayerJumpPowerChanged(float jumpPower)
