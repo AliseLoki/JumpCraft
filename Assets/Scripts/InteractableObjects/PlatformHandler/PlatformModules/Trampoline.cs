@@ -8,6 +8,8 @@ public class Trampoline : MonoBehaviour
     [SerializeField] private Material _red;
     [SerializeField] private Material _green;
 
+   // из грин должно быть здесь
+
     public void SetMaterial(bool isGreen)
     {
         if (isGreen) SetForAllRenderers(_green);

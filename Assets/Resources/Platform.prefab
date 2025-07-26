@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1734719446696834045}
   - component: {fileID: 4445800156323740534}
   - component: {fileID: -3087070339874076632}
-  - component: {fileID: 8402383340898532643}
   m_Layer: 7
   m_Name: Platform
   m_TagString: Untagged
@@ -91,27 +90,6 @@ MonoBehaviour:
   _mediumScale: 0.9
   _largeScale: 1.2
   _text: {fileID: 4992375423734632767}
---- !u!135 &8402383340898532643
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1560561378052140167}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1.5
-  m_Center: {x: 0, y: 10, z: -14}
 --- !u!1 &1690916822303075734
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,15 +7,11 @@
         false,
         false
     ],
-    "idSave": 672,
-    "Health": 1,
-    "DiamondsAmount": 1,
+    "idSave": 757,
+    "Health": 2,
+    "DiamondsAmount": 0,
     "CurrentPlayerViewSO": {
-        "instanceID": 24092
+        "instanceID": 0
     },
-    "AvailableViews": [
-        {
-            "instanceID": 24092
-        }
-    ]
+    "AvailableViews": []
 }
