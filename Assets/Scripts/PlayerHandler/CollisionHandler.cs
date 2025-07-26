@@ -13,6 +13,12 @@ public class CollisionHandler : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if(collision.collider.TryGetComponent(out Pig pig))
+        {
+            _player.UIHandler.OpenLuckyWheelPanel();
+        }
+
+
         if (collision.collider.TryGetComponent(out Platform platform))
         {
             _isGrounded = true;

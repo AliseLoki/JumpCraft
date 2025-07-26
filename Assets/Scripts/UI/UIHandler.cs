@@ -5,8 +5,15 @@ using YG;
 
 public class UIHandler : MonoBehaviour
 {
+    // удалить повторения 
+    // выключить свинью после закрытия колеса
+    // прибраться в обджект пуле
+    // сделать задержку 1с перед открытием колеса
+
+
     [SerializeField] private SoundController _soundController;
     [SerializeField] private ShopView _shopView;
+    [SerializeField] private LuckyWheelSimple _luckyWheel;
 
     [SerializeField] private TMP_Text _educationText;
     [SerializeField] private TMP_Text _diamondsAmountText;
@@ -74,6 +81,12 @@ public class UIHandler : MonoBehaviour
         _isGamePlaying = true;
         _educationText.gameObject.SetActive(false);
         _startButton.gameObject.SetActive(false);
+    }
+
+    public void OpenLuckyWheelPanel()
+    {
+        _luckyWheel.gameObject.SetActive(true);
+        _isGamePlaying = false;
     }
 
     public void OpenShop()

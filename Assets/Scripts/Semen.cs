@@ -22,6 +22,7 @@ public class Semen : MonoBehaviour
     public int DiamondSpawnChance = 3;
     public int HeartSpawnChance = 3; // но шанс получается меньше так как платформ контроллер проверяет есть ли батут и только тогда спаунит
     public int RedTrampolineSuccessfullJump = 3;
+    public int PigSpawnChance = 2;
 
     public static Semen Instance { get; private set; }
 

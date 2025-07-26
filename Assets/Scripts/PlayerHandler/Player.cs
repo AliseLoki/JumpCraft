@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
     private UIHandler _ui;
     private ShopView _shopView;
     private SoundController _soundController;

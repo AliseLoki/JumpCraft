@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class PlatformsController : MonoBehaviour
@@ -15,18 +14,16 @@ public class PlatformsController : MonoBehaviour
 
     [SerializeField] private Transform _defaultPosition;
 
-    private float _minOffset = 6;//6
-    private float _maxOffset = 9;//9
+    private float _minOffset = 6;
+    private float _maxOffset = 9;
 
-    private float _minHeightOffset = 0;//0
-    private float _maxHeightOffset = 6;//6
+    private float _minHeightOffset = 0;
+    private float _maxHeightOffset = 6;
 
     private PlatformsScoreController _scoreController;
     public PlatformsScoreController ScoreController => _scoreController;
 
     public Platform CurrentPlatform => _currentPlatform;
-    // временно!!
-    //public event Action<Vector3> CenterChanged;
 
     private void OnDisable()
     {
@@ -49,7 +46,13 @@ public class PlatformsController : MonoBehaviour
     {
         InitPlatforms(platform);
 
-        if (!_secondPlatform.Trampoline.gameObject.activeSelf) _collectablesController.SpawnHeart(_secondPlatform.transform.position);
+        if (!_secondPlatform.Trampoline.gameObject.activeSelf)
+        {
+            int chance = Random.Range(0, 2);
+
+            if (chance == 0) _collectablesController.SpawnPig(_secondPlatform.transform.position);
+            else _collectablesController.SpawnHeart(_secondPlatform.transform.position);
+        }
 
         _collectablesController.SpawnDiamond(CalculateCenterBetweenPlatforms(_firstPlatform, _secondPlatform));
 
