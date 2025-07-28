@@ -11,31 +11,31 @@ public class ViewHandler : MonoBehaviour
     
     public void InitDefaultView()
     {
-        if(YG2.saves.CurrentPlayerViewSO == null)
-        {
-            YG2.saves.CurrentPlayerViewSO = _defaultPlayerViewSO;
-            YG2.saves.AvailableViews.Add(YG2.saves.CurrentPlayerViewSO);
-        }
+        //if(YG2.saves.CurrentPlayerViewSO == null)
+        //{
+        //    YG2.saves.CurrentPlayerViewSO = _defaultPlayerViewSO;
+        //    YG2.saves.AvailableViews.Add(YG2.saves.CurrentPlayerViewSO);
+        //}
 
-        _material.mainTexture = YG2.saves.CurrentPlayerViewSO.ViewImage;
-        _crown.gameObject.SetActive(CheckIfPig(YG2.saves.CurrentPlayerViewSO));
+        //_material.mainTexture = YG2.saves.CurrentPlayerViewSO.ViewImage;
+        //_crown.gameObject.SetActive(CheckIfPig(YG2.saves.CurrentPlayerViewSO));
     }
 
     public void InitNewView(PlayerViewSO playerViewSO)
     {
-        if (YG2.saves.CurrentPlayerViewSO != playerViewSO)
-        {
-            if (!CheckIfPlayerViewSOExist(playerViewSO))
-            {
-                YG2.saves.AvailableViews.Add(playerViewSO);             
-            }
+        //if (YG2.saves.CurrentPlayerViewSO != playerViewSO)
+        //{
+        //    if (!CheckIfPlayerViewSOExist(playerViewSO))
+        //    {
+        //        YG2.saves.AvailableViews.Add(playerViewSO);             
+        //    }
 
-            YG2.saves.CurrentPlayerViewSO = playerViewSO;
-            YG2.SaveProgress();
+        //    YG2.saves.CurrentPlayerViewSO = playerViewSO;
+        //    YG2.SaveProgress();
 
-            _material.mainTexture = playerViewSO.ViewImage;
-            _crown.gameObject.SetActive(CheckIfPig(playerViewSO));
-        }
+        //    _material.mainTexture = playerViewSO.ViewImage;
+        //    _crown.gameObject.SetActive(CheckIfPig(playerViewSO));
+        //}
     }
 
     private bool CheckIfPig(PlayerViewSO playerViewSO)

@@ -2,20 +2,24 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    //private Vector3 _defaultPosition = new Vector3(5, 15, -12);
     private const float MobileFOV = 40f;
     private const float DesktopFOV = 60f;
 
     [SerializeField] private ShopView _shopView;
 
     private float _currentFOV;
-
     private Player _player;
 
-    private Vector3 _defaultPosition = new Vector3(-4.2f, 13.2f, -10.6f);
-    private Vector3 _defaultRotation = new Vector3(33.7f, 37.8f, 6.4f);
-    private Vector3 _offset = new Vector3(-4.2f, 9.2f, -10.6f);
+    private Vector3 _offset;
     private Vector3 _offsetForOpenShop = new Vector3(4.45f, 2.37f, -6.5f);
     private Vector3 _rotationForOpenShop = new Vector3(15.4f, -3, 0);
+    private Vector3 _defaultRotation = new Vector3(30, 0, 0);
+
+    private void Start()
+    {
+        _offset = transform.position - _player.transform.position;
+    }
 
     private void LateUpdate()
     {
@@ -25,7 +29,7 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            SetPosition(_offset, _defaultRotation,_currentFOV);
+            SetPosition(_offset, _defaultRotation, _currentFOV);
         }
     }
 
@@ -35,8 +39,6 @@ public class CameraController : MonoBehaviour
 
         if (isMobile) _currentFOV = MobileFOV;
         else _currentFOV = DesktopFOV;
-
-        SetPosition(_defaultPosition, _defaultRotation, _currentFOV);
     }
 
     private void SetPosition(Vector3 offset, Vector3 rotation, float fov)

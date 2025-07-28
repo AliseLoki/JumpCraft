@@ -7,8 +7,8 @@ public class Platform : Collectable
     [SerializeField] private Trampoline _trampoline;
 
     // в будущем сделать просчитывание через коллайдер платформы
-    private float _sector2 = 2f; //1f  размер 5, условно по 1.5
-    private float _sector3 = 1f; //0.5f
+    private float _sector2 = 1f; //1f  размер 5, условно по 1.5
+    private float _sector3 = 0.5f; //0.5f
 
     private bool _isGreen = true;
     private int _bonusScore;

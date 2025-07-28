@@ -53,17 +53,19 @@ public class PlatformsController : MonoBehaviour
             if (chance == 0) _collectablesController.SpawnPig(_secondPlatform.transform.position);
             else _collectablesController.SpawnHeart(_secondPlatform.transform.position);
         }
+        
 
-        int chance1 = Random.Range(0, 2);
+            int chance1 = Random.Range(0, 2);
 
         if (chance1 == 0) _collectablesController.SpawnDiamond(CalculateCenterBetweenPlatforms(_firstPlatform, _secondPlatform));
         else _collectablesController.SpawnCoin(CalculateCenterBetweenPlatforms(_firstPlatform, _secondPlatform));
 
-        if (platform.CheckIfPlayerOnTrampoline(_player.transform.position.x, _player.transform.position.z))
+        if(platform.Trampoline.gameObject.activeSelf) 
         {
             if (platform.IsGreen) _player.JumpHandler.TrampolineJump(_firstPlatform);
             else _player.JumpHandler.RedTrampolineJump(_firstPlatform);
         }
+
     }
 
     private void InitPlatforms(Platform platform)

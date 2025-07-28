@@ -13,8 +13,6 @@ public class Player : MonoBehaviour
     [SerializeField] private ViewHandler _viewHandler;
     [SerializeField] private Health _health;
 
-    public event Action<CollectableName> CollectablesAmountChanged;
-  
     public CollisionHandler CollisionHandler => _collisionHandler;
     public JumpHandler JumpHandler => _jumpHandler;
     public SoundController SoundController => _soundController;
