@@ -1,4 +1,4 @@
-public class Pig : Interactable
+public class Pig : Collectable
 {
    
 }

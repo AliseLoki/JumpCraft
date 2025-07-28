@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5609566115754621710}
-  - component: {fileID: 1535969681036021011}
   - component: {fileID: 7490690557051528089}
+  - component: {fileID: 6894379019105317624}
   m_Layer: 0
   m_Name: Heart
   m_TagString: Untagged
@@ -34,18 +34,6 @@ Transform:
   - {fileID: 4612521260039142947}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1535969681036021011
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3872875344729339245}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4647470e7cc6f2468c035068234c29c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &7490690557051528089
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -67,6 +55,19 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6894379019105317624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3872875344729339245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a976dc70556601439f619cb46fd7cd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: 2
 --- !u!1 &8305984759899867916
 GameObject:
   m_ObjectHideFlags: 0

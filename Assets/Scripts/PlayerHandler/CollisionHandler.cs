@@ -13,12 +13,6 @@ public class CollisionHandler : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.collider.TryGetComponent(out Pig pig))
-        {
-            _player.UIHandler.OpenLuckyWheelPanel();
-        }
-
-
         if (collision.collider.TryGetComponent(out Platform platform))
         {
             _isGrounded = true;
@@ -36,17 +30,16 @@ public class CollisionHandler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out Diamond diamond))
+        if (other.TryGetComponent(out Pig pig))
         {
-            _player.SoundController.PlaySound(SoundName.Diamond.ToString());
-            _player.ChangeCollectablesAmount();
-            diamond.gameObject.SetActive(false);
+            pig.gameObject.SetActive(false);
+            _player.UIHandler.OpenLuckyWheelPanel();
         }
 
-        if (other.TryGetComponent(out Heart heart))
+        if (other.TryGetComponent(out Collectable collectable))
         {
-            _player.Health.ChangeHealth(1);
-            heart.gameObject.SetActive(false);
+            _player.UIHandler.ChangeCollectablesAmount(collectable.Name);
+            collectable.gameObject.SetActive(false);
         }
     }
 }

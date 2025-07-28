@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Platform : Interactable
+public class Platform : Collectable
 {
     [SerializeField] private PlatformScoreBonusView _scoreBonusView;
     [SerializeField] private Trampoline _trampoline;

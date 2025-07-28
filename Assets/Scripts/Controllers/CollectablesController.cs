@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CollectablesController
 {
-    private float _collectablesPosYOffset = 7;
+    private float _diamondPosYOffset = 5;
     private float _heartsOffset = 2;
     private float _pigOffset = 2.5f;
 
@@ -24,6 +24,15 @@ public class CollectablesController
         }
     }
 
+    public void SpawnCoin(Vector3 pos)
+    {
+        int chance = Random.Range(0, Semen.Instance.PigSpawnChance);
+
+        if (chance == 0)
+        {
+            var newCoin = _pool.GetPooledObject(_pool.Coins, _pool.Coin, new Vector3(pos.x, pos.y + _diamondPosYOffset, pos.z));
+        }
+    }
     public void SpawnHeart(Vector3 pos)
     {
         int chance = Random.Range(0, Semen.Instance.HeartSpawnChance);
@@ -40,7 +49,7 @@ public class CollectablesController
 
         if (chance == 0)
         {
-            var newDiamond = _pool.GetPooledObject(_pool.Coins, _pool.CoinToPool, new Vector3(pos.x, pos.y + _collectablesPosYOffset, pos.z));
+            var newDiamond = _pool.GetPooledObject(_pool.Diamonds, _pool.Diamond, new Vector3(pos.x, pos.y + _diamondPosYOffset, pos.z));
         }
     }
 }

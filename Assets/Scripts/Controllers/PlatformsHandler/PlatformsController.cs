@@ -36,7 +36,7 @@ public class PlatformsController : MonoBehaviour
         _collectablesController = collectablesController;
         _scoreController = new PlatformsScoreController();
         _objectsPool = pool;
-        _currentPlatform = _objectsPool.GetPooledObject(_objectsPool.Platforms, _objectsPool.PlatformToPool, new Vector3(0, 3.1f, 0)) as Platform;
+        _currentPlatform = _objectsPool.GetPooledObject(_objectsPool.Platforms, _objectsPool.Platform, new Vector3(0, 3.1f, 0)) as Platform;
         _player = player;
         _player.CollisionHandler.PlayerJumpedOnPlatform += OnPlayerJumpedOnPlatform;
         Spawn2Platforms();
@@ -54,7 +54,10 @@ public class PlatformsController : MonoBehaviour
             else _collectablesController.SpawnHeart(_secondPlatform.transform.position);
         }
 
-        _collectablesController.SpawnDiamond(CalculateCenterBetweenPlatforms(_firstPlatform, _secondPlatform));
+        int chance1 = Random.Range(0, 2);
+
+        if (chance1 == 0) _collectablesController.SpawnDiamond(CalculateCenterBetweenPlatforms(_firstPlatform, _secondPlatform));
+        else _collectablesController.SpawnCoin(CalculateCenterBetweenPlatforms(_firstPlatform, _secondPlatform));
 
         if (platform.CheckIfPlayerOnTrampoline(_player.transform.position.x, _player.transform.position.z))
         {
@@ -96,7 +99,7 @@ public class PlatformsController : MonoBehaviour
 
     private Platform GetPlatformFromPool()
     {
-        var newPlatfrorm = _objectsPool.GetPooledObject(_objectsPool.Platforms, _objectsPool.PlatformToPool,
+        var newPlatfrorm = _objectsPool.GetPooledObject(_objectsPool.Platforms, _objectsPool.Platform,
             CalculatePlatformPos(_defaultPosition,
             CalculateRandomValue(_minOffset, _maxOffset), 0)) as Platform;
         _defaultPosition = newPlatfrorm.transform;

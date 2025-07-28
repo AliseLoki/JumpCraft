@@ -18,13 +18,13 @@ public class Health : MonoBehaviour
 
     private void CheckHealth()
     {
-        if (YG2.saves.Health <= _minHealth) Die();
+        if (YG2.saves.Heart <= _minHealth) Die();
         else Rise();
     }
 
     public void ChangeHealth(int healthChangeValue)
     {
-        YG2.saves.Health = Mathf.Clamp(YG2.saves.Health + healthChangeValue, 0, _maxHealth);
+        YG2.saves.Heart = Mathf.Clamp(YG2.saves.Heart + healthChangeValue, 0, _maxHealth);
         HealthChanged?.Invoke();
     }
 

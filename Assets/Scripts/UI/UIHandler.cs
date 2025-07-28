@@ -5,11 +5,7 @@ using YG;
 
 public class UIHandler : MonoBehaviour
 {
-    // удалить повторения 
-    // выключить свинью после закрытия колеса
-    // прибраться в обджект пуле
-    // сделать задержку 1с перед открытием колеса
-
+    private const string OpenWheel = nameof(OpenWheelTest);
 
     [SerializeField] private SoundController _soundController;
     [SerializeField] private ShopView _shopView;
@@ -17,15 +13,14 @@ public class UIHandler : MonoBehaviour
 
     [SerializeField] private TMP_Text _educationText;
     [SerializeField] private TMP_Text _diamondsAmountText;
+    [SerializeField] private TMP_Text _coinAmountText;
     [SerializeField] private TMP_Text _scoreText;
-
     [SerializeField] private Image _jumpPowerScaleImage;
-
     [SerializeField] private Button _startButton;
-
     [SerializeField] private Transform _healthContainer;
     [SerializeField] private HeartView _heartView;
 
+    private int _maxHeartAmount = 4;
     private Fabrica _fabrica;
     private Player _player;
     private PlatformsController _platformsController;
@@ -41,10 +36,8 @@ public class UIHandler : MonoBehaviour
 
     private void OnDisable()
     {
-        _player.CollectablesAmountChanged -= OnCollectablesAmountChanged;
         _platformsController.ScoreController.ScoreChanged -= OnScoreChanged;
         _player.JumpHandler.JumpPowerChanged -= OnPlayerJumpPowerChanged;
-        _player.Health.HealthChanged -= OnHealthChanged;
     }
 
     public void Init(Player player, Fabrica fabrica, PlatformsController platformsController)
@@ -55,24 +48,51 @@ public class UIHandler : MonoBehaviour
         _fabrica = fabrica;
     }
 
+    public void OpenWheelTest()
+    {
+        _luckyWheel.gameObject.SetActive(true);
+    }
+
     public void StartGame()
     {
         SetStartButtonActive();
+        ShowNewValue(_diamondsAmountText, YG2.saves.Diamond);
+        ShowNewValue(_coinAmountText, YG2.saves.Coin);
         FillInHealth();
-
-        ShowNewValue(_diamondsAmountText, YG2.saves.DiamondsAmount);
         SetJumpPowerScaleAmount(0);
 
-        _player.CollectablesAmountChanged += OnCollectablesAmountChanged;
         _platformsController.ScoreController.ScoreChanged += OnScoreChanged;
         _player.JumpHandler.JumpPowerChanged += OnPlayerJumpPowerChanged;
-        _player.Health.HealthChanged += OnHealthChanged;
     }
+
+
+    public void ChangeCollectablesAmount(CollectableName name)
+    {
+        switch (name)
+        {
+            case CollectableName.Heart:
+
+                if(YG2.saves.Heart<_maxHeartAmount) ChangeValue(ref YG2.saves.Heart);
+                ChangeHealth();
+                break;
+
+            case CollectableName.Diamond:
+                ChangeValue(ref YG2.saves.Diamond);
+                ShowNewValue(_diamondsAmountText, YG2.saves.Diamond);
+                break;
+
+            case CollectableName.Coin:
+                ChangeValue(ref YG2.saves.Coin);
+                ShowNewValue(_coinAmountText, YG2.saves.Coin);
+                break;
+        }
+    }
+
     //убрать потом
     public void TestDeleteSavesButton()
     {
         YG2.SetDefaultSaves();
-        ShowNewValue(_diamondsAmountText, YG2.saves.DiamondsAmount);
+        ShowNewValue(_diamondsAmountText, YG2.saves.Diamond);
         YG2.SaveProgress();
     }
 
@@ -85,8 +105,9 @@ public class UIHandler : MonoBehaviour
 
     public void OpenLuckyWheelPanel()
     {
-        _luckyWheel.gameObject.SetActive(true);
         _isGamePlaying = false;
+
+        Invoke(OpenWheel, 0.5f);        
     }
 
     public void OpenShop()
@@ -101,6 +122,12 @@ public class UIHandler : MonoBehaviour
         _isGamePlaying = true;
     }
 
+    public void CloseWheel()
+    {
+        _luckyWheel.gameObject.SetActive(false);
+        _isGamePlaying = true;
+    }
+
     private void SetStartButtonActive()
     {
         _isGamePlaying = false;
@@ -110,7 +137,7 @@ public class UIHandler : MonoBehaviour
 
     private void FillInHealth()
     {
-        for (int i = 0; i < YG2.saves.Health; i++)
+        for (int i = 0; i < YG2.saves.Heart; i++)
         {
             var newHeart = _fabrica.CreatePrefab(_heartView, Quaternion.identity, _healthContainer);
         }
@@ -121,20 +148,13 @@ public class UIHandler : MonoBehaviour
         SetJumpPowerScaleAmount((jumpPower - _minValue) / _divider);
     }
 
-    private void OnCollectablesAmountChanged()
+    private void ChangeHealth()
     {
-        YG2.saves.DiamondsAmount++;
-        YG2.SaveProgress();
-        ShowNewValue(_diamondsAmountText, YG2.saves.DiamondsAmount);
-    }
-
-    private void OnHealthChanged()
-    {
-        if (_healthContainer.childCount > YG2.saves.Health)
+        if (_healthContainer.childCount > YG2.saves.Heart)
         {
             Destroy(_healthContainer.GetChild(0).gameObject);
         }
-        else if (_healthContainer.childCount < YG2.saves.Health)
+        else if (_healthContainer.childCount < YG2.saves.Heart)
         {
             var newHeart = _fabrica.CreatePrefab(_heartView, Quaternion.identity, _healthContainer);
         }
@@ -154,5 +174,11 @@ public class UIHandler : MonoBehaviour
     private void ShowNewValue(TMP_Text text, int newValue)
     {
         text.text = newValue.ToString();
+    }
+
+    private void ChangeValue(ref int value)
+    {
+        value++;
+        YG2.SaveProgress();
     }
 }

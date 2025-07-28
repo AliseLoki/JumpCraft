@@ -13,8 +13,8 @@ public class Player : MonoBehaviour
     [SerializeField] private ViewHandler _viewHandler;
     [SerializeField] private Health _health;
 
-    public event Action CollectablesAmountChanged;
-
+    public event Action<CollectableName> CollectablesAmountChanged;
+  
     public CollisionHandler CollisionHandler => _collisionHandler;
     public JumpHandler JumpHandler => _jumpHandler;
     public SoundController SoundController => _soundController;
@@ -43,11 +43,6 @@ public class Player : MonoBehaviour
         _viewHandler.InitDefaultView();
         transform.rotation = Quaternion.Euler(0, 90, 0);
         _shopView.PlayerViewChanged += OnPlayerViewChanged;
-    }
-
-    public void ChangeCollectablesAmount()
-    {
-        CollectablesAmountChanged?.Invoke();
     }
 
     private void OnPlayerViewChanged(PlayerViewSO playerViewSO)

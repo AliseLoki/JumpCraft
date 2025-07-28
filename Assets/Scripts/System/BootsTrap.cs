@@ -24,11 +24,12 @@ public class BootsTrap : MonoBehaviour
 
     private void CreateControllers()
     {
+        _fabrica = new Fabrica();
+        _collectablesController = new CollectablesController();
+
         CreateEmptyObjectWithScript<Semen>(nameof(Semen));
-        _fabrica = CreateEmptyObjectWithScript<Fabrica>(nameof(Fabrica));
         _objectsPool = CreateEmptyObjectWithScript<ObjectsPool>(nameof(ObjectsPool));
         _platformsController = CreateEmptyObjectWithScript<PlatformsController>(nameof(PlatformsController));
-        _collectablesController = new CollectablesController();
         _player = _fabrica.CreatePrefab(_fabrica.GetPrefabLinkFromFolder<Player>(nameof(Player)));
     }
 
