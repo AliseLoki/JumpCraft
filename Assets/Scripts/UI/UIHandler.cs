@@ -20,7 +20,7 @@ public class UIHandler : MonoBehaviour
     [SerializeField] private Transform _healthContainer;
     [SerializeField] private HeartView _heartView;
 
-    private int _maxHeartAmount = 4;
+    private int _maxHeartAmount = 3;
     private Fabrica _fabrica;
     private Player _player;
     private PlatformsController _platformsController;
@@ -72,8 +72,12 @@ public class UIHandler : MonoBehaviour
         {
             case CollectableName.Heart:
 
-                if(YG2.saves.Heart<_maxHeartAmount) ChangeValue(ref YG2.saves.Heart);
-                ChangeHealth();
+                if (YG2.saves.Heart < _maxHeartAmount)
+                {
+                    ChangeValue(ref YG2.saves.Heart);
+                    ChangeHealthView();
+                }
+
                 break;
 
             case CollectableName.Diamond:
@@ -107,7 +111,7 @@ public class UIHandler : MonoBehaviour
     {
         _isGamePlaying = false;
 
-        Invoke(OpenWheel, 0.5f);        
+        Invoke(OpenWheel, 0.5f);
     }
 
     public void OpenShop()
@@ -148,7 +152,7 @@ public class UIHandler : MonoBehaviour
         SetJumpPowerScaleAmount((jumpPower - _minValue) / _divider);
     }
 
-    private void ChangeHealth()
+    private void ChangeHealthView()
     {
         if (_healthContainer.childCount > YG2.saves.Heart)
         {
