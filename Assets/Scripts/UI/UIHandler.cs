@@ -23,7 +23,7 @@ public class UIHandler : MonoBehaviour
     private int _maxHeartAmount = 3;
     private Fabrica _fabrica;
     private Player _player;
-    private PlatformsController _platformsController;
+    private GameController _gameController;
 
     private bool _isGamePlaying = false;
 
@@ -36,14 +36,14 @@ public class UIHandler : MonoBehaviour
 
     private void OnDisable()
     {
-        _platformsController.ScoreController.ScoreChanged -= OnScoreChanged;
+        _gameController.ScoreController.ScoreChanged -= OnScoreChanged;
         _player.JumpHandler.JumpPowerChanged -= OnPlayerJumpPowerChanged;
     }
 
-    public void Init(Player player, Fabrica fabrica, PlatformsController platformsController)
+    public void Init(Player player, Fabrica fabrica, GameController platformsController)
     {
         _player = player;
-        _platformsController = platformsController;
+        _gameController = platformsController;
         _shopView.Init(fabrica);
         _fabrica = fabrica;
     }
@@ -61,7 +61,7 @@ public class UIHandler : MonoBehaviour
         FillInHealth();
         SetJumpPowerScaleAmount(0);
 
-        _platformsController.ScoreController.ScoreChanged += OnScoreChanged;
+        _gameController.ScoreController.ScoreChanged += OnScoreChanged;
         _player.JumpHandler.JumpPowerChanged += OnPlayerJumpPowerChanged;
     }
 

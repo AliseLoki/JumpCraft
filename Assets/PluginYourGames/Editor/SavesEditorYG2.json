@@ -7,10 +7,10 @@
         false,
         false
     ],
-    "idSave": 1290,
+    "idSave": 1321,
     "Heart": 1,
-    "Diamond": 5,
-    "Coin": 8,
+    "Diamond": 0,
+    "Coin": 0,
     "CurrentPlayerViewSO": {
         "instanceID": 0
     },

@@ -11,7 +11,7 @@ public class BootsTrap : MonoBehaviour
 
     private Player _player;
     private Fabrica _fabrica;
-    private PlatformsController _platformsController;
+    private GameController _gameController;
     private CollectablesController _collectablesController;
     private ObjectsPool _objectsPool;
 
@@ -29,7 +29,7 @@ public class BootsTrap : MonoBehaviour
 
         CreateEmptyObjectWithScript<Semen>(nameof(Semen));
         _objectsPool = CreateEmptyObjectWithScript<ObjectsPool>(nameof(ObjectsPool));
-        _platformsController = CreateEmptyObjectWithScript<PlatformsController>(nameof(PlatformsController));
+        _gameController = CreateEmptyObjectWithScript<GameController>(nameof(GameController));
         _player = _fabrica.CreatePrefab(_fabrica.GetPrefabLinkFromFolder<Player>(nameof(Player)));
     }
 
@@ -37,10 +37,10 @@ public class BootsTrap : MonoBehaviour
     {
         _mainCamera.Init(_player, CheckDevice());
         _objectsPool.Init(_fabrica);
-        _platformsController.Init(_objectsPool, _player, _collectablesController);
+        _gameController.Init(_objectsPool, _player, _collectablesController);
         _collectablesController.Init( _objectsPool);
-        _player.Init(_shopView, _soundController, _platformsController, _ui);
-        _ui.Init(_player, _fabrica, _platformsController);
+        _player.Init(_shopView, _soundController, _gameController, _ui);
+        _ui.Init(_player, _fabrica, _gameController);
     }
 
     private bool CheckDevice()

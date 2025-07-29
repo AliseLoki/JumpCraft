@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class Platform : Collectable
@@ -13,20 +12,18 @@ public class Platform : Collectable
     private bool _isGreen = true;
     private int _bonusScore;
 
-    private PlatformsScoreController _scoreController;
-
-    public bool IsGreen =>_isGreen;
+    public bool IsGreen => _isGreen;
 
     public Trampoline Trampoline => _trampoline;
 
     private void OnEnable()
     {
         _bonusScore = 0;
-        SetTrampolineActive();
+         SetTrampolineActive();
     }
 
     private void OnDisable()
-    {       
+    {
         _trampoline.gameObject.SetActive(false);
     }
 
@@ -36,7 +33,6 @@ public class Platform : Collectable
         {
             _bonusScore = CalculateBonus(player.transform.position.x, player.transform.position.z);
             _scoreBonusView.ShowScore(_bonusScore);
-            if (_scoreController != null) _scoreController.OnScoreChanged(_bonusScore);
         }
     }
 
@@ -48,25 +44,19 @@ public class Platform : Collectable
         }
     }
 
-    public void Init(PlatformsScoreController scoreController)
+    public int GetBonus(Player player)
     {
-        _scoreController = scoreController;
-    }
-
-    public bool CheckIfPlayerOnTrampoline(float x, float z)
-    {
-        if (CalculateBonus(x, z) == _scoreBonusView.BonusMax && _trampoline.gameObject.activeSelf) return true;
-        return false;
+        return CalculateBonus(player.transform.position.x, player.transform.position.z);
     }
 
     private void SetTrampolineActive()
     {
         int random = Random.Range(0, Semen.Instance.TrampolineSpawnChance);
         int randomColor = Random.Range(0, Semen.Instance.ColorTrampolineSpawnChance);
-        
-        if ( random == 0)
-        {           
-            if(randomColor == 0)
+
+        if (random == 0)
+        {
+            if (randomColor == 0)
             {
                 _isGreen = false;
                 _trampoline.SetMaterial(_isGreen);

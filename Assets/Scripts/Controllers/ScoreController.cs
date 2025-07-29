@@ -1,6 +1,6 @@
 using System;
 
-public class PlatformsScoreController 
+public class ScoreController 
 {
     private int _score;
 

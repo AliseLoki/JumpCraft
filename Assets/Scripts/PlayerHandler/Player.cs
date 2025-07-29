@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
     private UIHandler _ui;
     private ShopView _shopView;
     private SoundController _soundController;
-    private PlatformsController _platformsController;
+    private GameController _gameController;
 
     [SerializeField] private CollisionHandler _collisionHandler;
     [SerializeField] private JumpHandler _jumpHandler;
@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     public CollisionHandler CollisionHandler => _collisionHandler;
     public JumpHandler JumpHandler => _jumpHandler;
     public SoundController SoundController => _soundController;
-    public PlatformsController PlatformsController => _platformsController;
+    public GameController GameController => _gameController;
     public ShopView ShopView => _shopView;
 
     public UIHandler UIHandler => _ui;
@@ -28,11 +28,11 @@ public class Player : MonoBehaviour
         _shopView.PlayerViewChanged -= OnPlayerViewChanged;
     }
 
-    public void Init(ShopView shopView, SoundController contr, PlatformsController plContr, UIHandler ui)
+    public void Init(ShopView shopView, SoundController contr, GameController plContr, UIHandler ui)
     {
         _shopView = shopView;
         _soundController = contr;
-        _platformsController = plContr;
+        _gameController = plContr;
         _ui = ui;
     }
 

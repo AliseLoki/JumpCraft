@@ -20,6 +20,13 @@ public class CollisionHandler : MonoBehaviour
             _player.JumpHandler.OnPlayerIsLanded();
             PlayerJumpedOnPlatform?.Invoke(platform);
         }
+
+        if(collision.collider.TryGetComponent(out Trampoline trampoline))
+        {
+            _player.SoundController.PlaySound(SoundName.Landing.ToString());
+            _player.JumpHandler.OnPlayerIsLanded();
+            PlayerJumpedOnPlatform?.Invoke(trampoline.Platform);
+        }
     }
 
     private void OnCollisionExit(Collision collision)
