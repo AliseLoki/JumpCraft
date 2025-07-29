@@ -9,14 +9,21 @@ public class WheelItem : MonoBehaviour
 
     [SerializeField] private Image _image;
 
+    [SerializeField] private WheelItemSO _wheelItemSO;
+
+    [SerializeField] private PrizeName _prizeName;
+
     public int Index => _index;
     public float Weight => _weight;
     public string Name => _name;
 
-    public void Init(string name, float weight, Sprite sprite)
+    public PrizeName PrizeName => _prizeName;
+
+    public void Init(WheelItemSO wheelItemSO)
     {
-        _name = name;
-        _weight = weight;
-        _image.sprite = sprite;
+        _name = wheelItemSO.Name;
+        _weight = wheelItemSO.Weight;
+        _image.sprite = wheelItemSO.Sprite;
+        _prizeName = wheelItemSO.PrizeName;
     }
 }

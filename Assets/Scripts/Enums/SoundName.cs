@@ -1,11 +1,14 @@
 public enum SoundName
 {
     ButtonPressed,
-    Crystall,
     Diamond,
+    Coin,
+    Cake,
     Jump,
     JumpPowerUp,
     JumpPowerDown,
-    FallingOnTheFloor,
     Landing,
+    LuckyWheel,
+    Win,
+    Rabbit,
 }

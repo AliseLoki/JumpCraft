@@ -38,6 +38,7 @@ public class UIHandler : MonoBehaviour
     {
         _gameController.ScoreController.ScoreChanged -= OnScoreChanged;
         _player.JumpHandler.JumpPowerChanged -= OnPlayerJumpPowerChanged;
+        _luckyWheel.PrizeRecieved -= OnPrizeRecieved;
     }
 
     public void Init(Player player, Fabrica fabrica, GameController platformsController)
@@ -63,6 +64,7 @@ public class UIHandler : MonoBehaviour
 
         _gameController.ScoreController.ScoreChanged += OnScoreChanged;
         _player.JumpHandler.JumpPowerChanged += OnPlayerJumpPowerChanged;
+        _luckyWheel.PrizeRecieved += OnPrizeRecieved;
     }
 
 
@@ -74,25 +76,33 @@ public class UIHandler : MonoBehaviour
 
                 if (YG2.saves.Heart < _maxHeartAmount)
                 {
-                    ChangeValue(ref YG2.saves.Heart);
+                    ChangeValue(ref YG2.saves.Heart, 1);
                     ChangeHealthView();
                 }
 
+                _soundController.PlaySound(SoundName.Cake.ToString());
                 break;
 
             case CollectableName.Diamond:
-                ChangeValue(ref YG2.saves.Diamond);
+                _soundController.PlaySound(SoundName.Diamond.ToString());
+                ChangeValue(ref YG2.saves.Diamond, 1);
                 ShowNewValue(_diamondsAmountText, YG2.saves.Diamond);
                 break;
 
             case CollectableName.Coin:
-                ChangeValue(ref YG2.saves.Coin);
+                _soundController.PlaySound(SoundName.Coin.ToString());
+                ChangeValue(ref YG2.saves.Coin, 1);
                 ShowNewValue(_coinAmountText, YG2.saves.Coin);
+                break;
+
+            default:
+
                 break;
         }
     }
 
     //убрать потом
+
     public void TestDeleteSavesButton()
     {
         YG2.SetDefaultSaves();
@@ -164,6 +174,50 @@ public class UIHandler : MonoBehaviour
         }
     }
 
+    private void OnPrizeRecieved(PrizeName prizeName)
+    {
+        switch (prizeName)
+        {
+            case PrizeName.Heart:
+
+                if (YG2.saves.Heart < _maxHeartAmount)
+                {
+                    ChangeValue(ref YG2.saves.Heart, 1);
+                    ChangeHealthView();
+                }
+
+                break;
+
+            case PrizeName.Pig:
+                print("Получил скин короля! Прописать в магазине");
+                break;
+
+            case PrizeName.Diamond1:
+                ChangeValue(ref YG2.saves.Diamond, 1);
+                ShowNewValue(_diamondsAmountText, YG2.saves.Diamond);
+                break;
+
+            case PrizeName.Diamond2:
+                ChangeValue(ref YG2.saves.Diamond, 2);
+                ShowNewValue(_diamondsAmountText, YG2.saves.Diamond);
+                break;
+
+            case PrizeName.Diamond3:
+                ChangeValue(ref YG2.saves.Diamond, 3);
+                ShowNewValue(_diamondsAmountText, YG2.saves.Diamond);
+                break;
+
+            case PrizeName.Coin:
+                ChangeValue(ref YG2.saves.Coin, 1);
+                ShowNewValue(_coinAmountText, YG2.saves.Coin);
+                break;
+
+            default:
+
+                break;
+        }
+    }
+
     private void OnScoreChanged(int score)
     {
         YG2.SetLeaderboard("leaderboard", score);
@@ -180,9 +234,9 @@ public class UIHandler : MonoBehaviour
         text.text = newValue.ToString();
     }
 
-    private void ChangeValue(ref int value)
+    private void ChangeValue(ref int value, int plusValue)
     {
-        value++;
+        value += plusValue;
         YG2.SaveProgress();
     }
 }

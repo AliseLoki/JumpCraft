@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -18,10 +19,19 @@ public class LuckyWheelSimple : MonoBehaviour
 
     [SerializeField] private List<WheelItem> _wheelItems;
     [SerializeField] private List<WheelItemSO> _wheelItemsSO;
-    
+
+    private PrizeName _currentPrizeName;
+
+    public event Action<PrizeName> PrizeRecieved;
+
     private void OnEnable()
     {
         FillInWheelImagesData();
+    }
+
+    public void OnExtraSpinButtonDown()
+    {
+        SetInteractable(true);
     }
 
     public void OnLuckyWheelButtonDown()
@@ -32,7 +42,7 @@ public class LuckyWheelSimple : MonoBehaviour
     private IEnumerator SpinningRoutine(Transform wheel, float defaultSpeed)
     {
         int index = GetCheatPrize();
-       
+
         SetInteractable(false);
 
         yield return DefaultRotationRoutine(_timeBeforeCheating, 0, defaultSpeed, wheel);
@@ -42,7 +52,7 @@ public class LuckyWheelSimple : MonoBehaviour
 
         yield return DefaultRotationRoutine(timeBeforeStop, defaultSpeed, 0, wheel);
 
-        SetInteractable(true);
+        PrizeRecieved?.Invoke(_currentPrizeName);
     }
 
     private IEnumerator DefaultRotationRoutine(float stopTime, float a, float b, Transform wheel)
@@ -68,17 +78,17 @@ public class LuckyWheelSimple : MonoBehaviour
         for (int i = 0; i < _wheelItems.Count; i++)
         {
             var wheelItemSO = GetWheelItemSO();
-            _wheelItems[i].Init(wheelItemSO.Name, wheelItemSO.Weight, wheelItemSO.Sprite);
+            _wheelItems[i].Init(wheelItemSO);
         }
     }
 
     private WheelItemSO GetWheelItemSO()
     {
-        int randomIndex = Random.Range(0, _wheelItemsSO.Count);
+        int randomIndex = UnityEngine.Random.Range(0, _wheelItemsSO.Count);
 
-        if (_wheelItemsSO[randomIndex].Weight <= Random.Range(0, 1))
+        if (_wheelItemsSO[randomIndex].Weight <= UnityEngine.Random.Range(0, 1))
         {
-           return GetWheelItemSO();
+            return GetWheelItemSO();
         }
 
         return _wheelItemsSO[randomIndex];
@@ -86,14 +96,15 @@ public class LuckyWheelSimple : MonoBehaviour
 
     private int GetCheatPrize()
     {
-        int randomSector = Random.Range(0, _wheelItems.Count);
+        int randomSector = UnityEngine.Random.Range(0, _wheelItems.Count);
 
-        if (_wheelItems[randomSector].Weight <= Random.Range(0f, 1f))
+        if (_wheelItems[randomSector].Weight <= UnityEngine.Random.Range(0f, 1f))
         {
             return GetCheatPrize();
         }
 
-        _prizeName.text = _wheelItems[randomSector].Name;
+      //  _prizeName.text = _wheelItems[randomSector].Name;
+        _currentPrizeName = _wheelItems[randomSector].PrizeName;
 
         return randomSector;
     }

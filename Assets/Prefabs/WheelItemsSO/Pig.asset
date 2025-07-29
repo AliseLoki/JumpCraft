@@ -15,3 +15,4 @@ MonoBehaviour:
   _weight: 0.1
   _sprite: {fileID: 21300000, guid: fc63be4695f1a5d4aa02646083058992, type: 3}
   _name: Pig
+  _prizeName: 3

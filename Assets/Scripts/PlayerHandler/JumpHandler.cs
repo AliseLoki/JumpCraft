@@ -16,19 +16,11 @@ public class JumpHandler : MonoBehaviour
     private float _platformsOffset = 6f; // офсет платформы + макс высота спауна
 
     [SerializeField] private Player _player;
+  //  [SerializeField] private Animator _animator;
 
     private Coroutine _coroutine;
 
     public event Action<float> JumpPowerChanged;
-
-    public Action OnPrepareJump;
-    public Action OnJump;
-    public Action OnLand;
-    public Action OnDrop;
-
-    public float GetCurrentPower => _jumpPower;
-
-    public float GetMaxJumpPower => _maxJumpPower;
 
     public void IncreaseJumpPower()
     {
@@ -48,7 +40,8 @@ public class JumpHandler : MonoBehaviour
 
     public void OnPlayerIsLanded()
     {
-        OnLand?.Invoke();
+      //  OnLand?.Invoke();
+     // _animator.SetTrigger("Land");
     }
 
     public void RedTrampolineJump(Platform firstPlatform)
@@ -65,7 +58,8 @@ public class JumpHandler : MonoBehaviour
 
     private void JumpDefault(float jumpPowerX, float jumpPowerZ)
     {
-        OnJump?.Invoke();
+        // OnJump?.Invoke();
+       // _animator.SetTrigger("Jump");
 
         transform.DOJump(new Vector3(transform.position.x + jumpPowerX, transform.position.y + _platformsOffset,
             transform.position.z + jumpPowerZ), _jumpHeight, NumJumps, _duration);
@@ -79,7 +73,7 @@ public class JumpHandler : MonoBehaviour
         while (!Input.GetMouseButtonUp(0))
         {
             _player.SoundController.PlaySound(SoundName.JumpPowerUp.ToString());
-            OnPrepareJump?.Invoke();
+           // OnPrepareJump?.Invoke();
 
             for (int i = _minJumpPower; i <= _maxJumpPower; i++)
             {

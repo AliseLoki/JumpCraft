@@ -129,6 +129,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 376346837789446059}
+  - component: {fileID: 7785147560673626709}
   m_Layer: 0
   m_Name: Slime_02
   m_TagString: Untagged
@@ -153,6 +154,27 @@ Transform:
   - {fileID: 4075468829629573937}
   m_Father: {fileID: 6436396549758827636}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!95 &7785147560673626709
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1041138387424662801}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fb434d2f5174da646a880cec1beff8b2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1769224020461397385
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,7 +345,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6436396549758827636}
   - component: {fileID: 8041229994698497803}
-  - component: {fileID: 2540787440811354039}
   - component: {fileID: 2180668049518054117}
   m_Layer: 0
   m_Name: Pig
@@ -360,28 +381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf07df3bf8b7bce479759d470f834013, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: 0
---- !u!95 &2540787440811354039
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7678388048474769961}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2e06ad85e8ed0304bb147771886bbf63, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  _name: 3
 --- !u!135 &2180668049518054117
 SphereCollider:
   m_ObjectHideFlags: 0

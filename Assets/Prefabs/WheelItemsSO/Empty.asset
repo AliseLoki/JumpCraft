@@ -15,3 +15,4 @@ MonoBehaviour:
   _weight: 1
   _sprite: {fileID: 21300000, guid: d38a02490d7eab940a99982f55940562, type: 3}
   _name: Empty
+  _prizeName: 8

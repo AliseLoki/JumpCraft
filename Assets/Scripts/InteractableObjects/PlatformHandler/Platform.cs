@@ -5,26 +5,33 @@ public class Platform : Collectable
     [SerializeField] private PlatformScoreBonusView _scoreBonusView;
     [SerializeField] private Trampoline _trampoline;
 
+    // пока временно здесь
+    //private int _trampolineSpawnChance = 4;
+    private int _colorSpawnChance = 2;
+
     // в будущем сделать просчитывание через коллайдер платформы
     private float _sector2 = 1f; //1f  размер 5, условно по 1.5
     private float _sector3 = 0.5f; //0.5f
 
+    private bool _isEmpty = true;
     private bool _isGreen = true;
     private int _bonusScore;
 
     public bool IsGreen => _isGreen;
+
+    public bool IsEmpty => _isEmpty;
 
     public Trampoline Trampoline => _trampoline;
 
     private void OnEnable()
     {
         _bonusScore = 0;
-         SetTrampolineActive();
     }
 
     private void OnDisable()
     {
         _trampoline.gameObject.SetActive(false);
+        _isEmpty = true;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -49,13 +56,18 @@ public class Platform : Collectable
         return CalculateBonus(player.transform.position.x, player.transform.position.z);
     }
 
-    private void SetTrampolineActive()
+    public void SetEmpty(bool isEmpty)
     {
-        int random = Random.Range(0, Semen.Instance.TrampolineSpawnChance);
-        int randomColor = Random.Range(0, Semen.Instance.ColorTrampolineSpawnChance);
+        _isEmpty = isEmpty;
+    }
 
-        if (random == 0)
-        {
+    public void SetTrampolineActive()
+    {
+       // int random = Random.Range(0, _trampolineSpawnChance);
+        int randomColor = Random.Range(0, _colorSpawnChance);
+
+       // if (random == 0)
+       // {
             if (randomColor == 0)
             {
                 _isGreen = false;
@@ -68,7 +80,7 @@ public class Platform : Collectable
             }
 
             _trampoline.gameObject.SetActive(true);
-        }
+      //  }
     }
 
     private int CalculateBonus(float x, float z)

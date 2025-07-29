@@ -5,8 +5,6 @@ public enum PrizeName
     Diamond3,
     Pig,
     Heart,
-    Point1,
-    Point2,
-    Point3,
     Empty,
+    Coin
 }

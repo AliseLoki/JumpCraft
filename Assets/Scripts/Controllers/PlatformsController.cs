@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlatformsController 
+public class PlatformsController
 {
     private Platform _firstPlatform;
     private Platform _secondPlatform;
@@ -14,10 +14,22 @@ public class PlatformsController
     private float _maxHeightOffset = 6;
 
     private Transform _defaultPosition;
-
     private ObjectsPool _objectsPool;
-    
-    public Platform FirstPlatform =>_firstPlatform;
+
+    public Platform FirstPlatform => _firstPlatform;
+    public Platform SecondPlatform => _secondPlatform;
+
+    public PlatformsController(Transform transform, ObjectsPool pool)
+    {
+        _defaultPosition = transform;
+        _objectsPool = pool;
+    }
+
+    //public void InitDefaultPosition(Transform transform, ObjectsPool pool)
+    //{
+    //    _defaultPosition = transform;
+    //    _objectsPool = pool;
+    //}
 
     public void InitPlatforms(Platform platform)
     {
@@ -39,12 +51,6 @@ public class PlatformsController
         if (_defaultPlatform != null) _defaultPlatform.gameObject.SetActive(false);
     }
 
-    public void InitDefaultPosition(Transform transform, ObjectsPool pool)
-    {
-        _defaultPosition = transform;
-        _objectsPool = pool;
-    }
-
     public void SpawnFirstPlatforms()
     {
         _currentPlatform = _objectsPool.GetPooledObject(_objectsPool.Platforms, _objectsPool.Platform, new Vector3(0, 3.1f, 0)) as Platform;
@@ -60,6 +66,14 @@ public class PlatformsController
     {
         _firstPlatform = GetPlatformFromPool();
         _secondPlatform = GetPlatformFromPool();
+    }
+
+    private void AddModule()
+    {
+        // модуль счета
+        // модуль батута: красного или зеленого
+        // модуль свинки
+        // пустая платформа
     }
 
     private Platform GetPlatformFromPool()

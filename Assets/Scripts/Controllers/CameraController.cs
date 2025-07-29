@@ -3,8 +3,8 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     //private Vector3 _defaultPosition = new Vector3(5, 15, -12);
-    private const float MobileFOV = 40f;
-    private const float DesktopFOV = 60f;
+    private const float MobileFOV = 50f;
+    private const float DesktopFOV = 65f;
 
     [SerializeField] private ShopView _shopView;
 

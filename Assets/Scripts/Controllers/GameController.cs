@@ -2,16 +2,12 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    // раздает задания другим контроллерам при приземлении игрока на платформу
+    private int _spawnChance = 5;
 
     private Player _player;
     private CollectablesController _collectablesController;
     private PlatformsController _platformsController;
-
     private ObjectsPool _objectsPool;
-
-    [SerializeField] private Transform _defaultPosition;
-
     private ScoreController _scoreController;
     public ScoreController ScoreController => _scoreController;
 
@@ -20,52 +16,52 @@ public class GameController : MonoBehaviour
         _player.CollisionHandler.PlayerJumpedOnPlatform -= OnPlayerJumpedOnPlatform;
     }
 
-    public void Init(ObjectsPool pool, Player player, CollectablesController collectablesController)
+    public void Init(ObjectsPool pool, Player player)
     {
-        _platformsController = new PlatformsController();
-
         _objectsPool = pool;
-        _platformsController.InitDefaultPosition(transform,_objectsPool);
-        _collectablesController = collectablesController;
+        _platformsController = new PlatformsController(transform, _objectsPool);
+        _collectablesController = new CollectablesController(_objectsPool);
         _scoreController = new ScoreController();
+
         _player = player;
         _player.CollisionHandler.PlayerJumpedOnPlatform += OnPlayerJumpedOnPlatform;
-
         _platformsController.SpawnFirstPlatforms();
     }
 
     private void OnPlayerJumpedOnPlatform(Platform platform)
     {
-
-        // именно здесь решается какой модуль включить для следующих платформ, и проверяется какой модуль активен
-
-        _platformsController.InitPlatforms(platform);        
+        _platformsController.InitPlatforms(platform);
         _scoreController.OnScoreChanged(platform.GetBonus(_player));
         var posCenter = _platformsController.CalculateCenterBetweenPlatforms();
 
-        // переключать модули поатформы
-        // спаунить коллектэблы в зависимости от шанса
-
+        // проверяем какой прыжок должен совершить игрок
         if (platform.Trampoline.gameObject.activeSelf)
         {
             if (platform.IsGreen) _player.JumpHandler.TrampolineJump(_platformsController.FirstPlatform);
             else _player.JumpHandler.RedTrampolineJump(_platformsController.FirstPlatform);
         }
+        // проверяем какой модуль подключить
+        if (_platformsController.SecondPlatform.IsEmpty) ChooseModule(_platformsController.SecondPlatform);
 
+        ChooseCollectableToSpawn(posCenter);
+    }
 
+    private void ChooseCollectableToSpawn(Vector3 posCenter)
+    {
+        int chance = Random.Range(0, _spawnChance);
 
-        //if (!_secondPlatform.Trampoline.gameObject.activeSelf)
-        //{
-        //    int chance = Random.Range(0, 2);
+        if (chance == 0 ) _collectablesController.SpawnDiamond(posCenter);
+        else if (chance == 1) _collectablesController.SpawnCoin(posCenter);
+    }
 
-        //    if (chance == 0) _collectablesController.SpawnPig(_secondPlatform.transform.position);
-        //    else _collectablesController.SpawnHeart(_secondPlatform.transform.position);
-        //}
+    private void ChooseModule(Platform platform)
+    {
+        int chance = Random.Range(0, _spawnChance);
 
+        if (chance == 0 ||  chance == 3) platform.SetTrampolineActive();
+        else if (chance == 1) _collectablesController.SpawnPig(_platformsController.SecondPlatform.transform.position);
+        else if (chance == 2) _collectablesController.SpawnHeart(_platformsController.SecondPlatform.transform.position);
 
-        //    int chance1 = Random.Range(0, 2);
-
-        //if (chance1 == 0) _collectablesController.SpawnDiamond(CalculateCenterBetweenPlatforms(_firstPlatform, _secondPlatform));
-        //else _collectablesController.SpawnCoin(CalculateCenterBetweenPlatforms(_firstPlatform, _secondPlatform));
+        platform.SetEmpty(false);
     }
 }

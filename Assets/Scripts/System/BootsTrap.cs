@@ -5,14 +5,12 @@ public class BootsTrap : MonoBehaviour
 {
     [SerializeField] private CameraController _mainCamera;
     [SerializeField] private UIHandler _ui;
-
     [SerializeField] private ShopView _shopView;
     [SerializeField] private SoundController _soundController;
 
     private Player _player;
     private Fabrica _fabrica;
     private GameController _gameController;
-    private CollectablesController _collectablesController;
     private ObjectsPool _objectsPool;
 
     private void Awake()
@@ -25,9 +23,6 @@ public class BootsTrap : MonoBehaviour
     private void CreateControllers()
     {
         _fabrica = new Fabrica();
-        _collectablesController = new CollectablesController();
-
-        CreateEmptyObjectWithScript<Semen>(nameof(Semen));
         _objectsPool = CreateEmptyObjectWithScript<ObjectsPool>(nameof(ObjectsPool));
         _gameController = CreateEmptyObjectWithScript<GameController>(nameof(GameController));
         _player = _fabrica.CreatePrefab(_fabrica.GetPrefabLinkFromFolder<Player>(nameof(Player)));
@@ -37,8 +32,7 @@ public class BootsTrap : MonoBehaviour
     {
         _mainCamera.Init(_player, CheckDevice());
         _objectsPool.Init(_fabrica);
-        _gameController.Init(_objectsPool, _player, _collectablesController);
-        _collectablesController.Init( _objectsPool);
+        _gameController.Init(_objectsPool, _player);
         _player.Init(_shopView, _soundController, _gameController, _ui);
         _ui.Init(_player, _fabrica, _gameController);
     }
