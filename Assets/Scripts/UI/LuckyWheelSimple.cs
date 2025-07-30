@@ -86,7 +86,7 @@ public class LuckyWheelSimple : MonoBehaviour
 
         yield return DefaultRotationRoutine(timeBeforeStop, defaultSpeed, 0, wheel);
 
-        
+        _ui.SoundController.StopSound();
         _ui.SoundController.PlaySound(SoundName.Win.ToString());
 
         PrizeRecieved?.Invoke(_currentPrizeName);
