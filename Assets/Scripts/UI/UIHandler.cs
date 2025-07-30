@@ -20,6 +20,8 @@ public class UIHandler : MonoBehaviour
     [SerializeField] private Transform _healthContainer;
     [SerializeField] private HeartView _heartView;
 
+    [SerializeField] private PlayerViewSO _kingViewSO;
+
     private int _maxHeartAmount = 3;
     private Fabrica _fabrica;
     private Player _player;
@@ -32,7 +34,13 @@ public class UIHandler : MonoBehaviour
     [SerializeField] float _divider = 10;
     // вот здесь подправить в зависимости от установленных в тесте
 
+    public TMP_Text DiamondsAmountText => _diamondsAmountText;
+
+    public TMP_Text CoinAmountText => _coinAmountText;
+
     public bool IsGamePlaying => _isGamePlaying;
+
+    public SoundController SoundController => _soundController;
 
     private void OnDisable()
     {
@@ -142,6 +150,24 @@ public class UIHandler : MonoBehaviour
         _isGamePlaying = true;
     }
 
+    public bool Pay(ref int value, int difference, TMP_Text text)
+    {
+        if (CheckIfCanPay(value, difference))
+        {
+            ChangeValue(ref value, difference);
+            ShowNewValue(text, value);
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool CheckIfCanPay(int value, int difference)
+    {
+        if (value + difference >= 0) return true;
+        else return false;
+    }
+
     private void SetStartButtonActive()
     {
         _isGamePlaying = false;
@@ -189,21 +215,21 @@ public class UIHandler : MonoBehaviour
                 break;
 
             case PrizeName.Pig:
-                print("Получил скин короля! Прописать в магазине");
+                _player.OnPlayerViewChanged(_kingViewSO);
                 break;
 
             case PrizeName.Diamond1:
-                ChangeValue(ref YG2.saves.Diamond, 1);
+                ChangeValue(ref YG2.saves.Diamond, 3);
                 ShowNewValue(_diamondsAmountText, YG2.saves.Diamond);
                 break;
 
             case PrizeName.Diamond2:
-                ChangeValue(ref YG2.saves.Diamond, 2);
+                ChangeValue(ref YG2.saves.Diamond, 6);
                 ShowNewValue(_diamondsAmountText, YG2.saves.Diamond);
                 break;
 
             case PrizeName.Diamond3:
-                ChangeValue(ref YG2.saves.Diamond, 3);
+                ChangeValue(ref YG2.saves.Diamond, 9);
                 ShowNewValue(_diamondsAmountText, YG2.saves.Diamond);
                 break;
 

@@ -1,17 +1,24 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 
 public class LuckyWheelSimple : MonoBehaviour
 {
+    private const string RewardId = "coin";
+
     private const float FullCircle = 360;
     private const float SectoreAngle = 45;
 
+    [SerializeField] private UIHandler _ui;
+
     [SerializeField] Button _wheelButton;
-    [SerializeField] TMP_Text _prizeName;
+
+    [SerializeField] Button _payCoin;
+    [SerializeField] Button _payDiamond;
+    [SerializeField] Button _whatchAdd;
 
     [SerializeField] private float _wheelSpeed = 800;
     [SerializeField] private float _timeBeforeCheating = 1;
@@ -20,6 +27,7 @@ public class LuckyWheelSimple : MonoBehaviour
     [SerializeField] private List<WheelItem> _wheelItems;
     [SerializeField] private List<WheelItemSO> _wheelItemsSO;
 
+    private int _addsViewing = 0;
     private PrizeName _currentPrizeName;
 
     public event Action<PrizeName> PrizeRecieved;
@@ -27,11 +35,35 @@ public class LuckyWheelSimple : MonoBehaviour
     private void OnEnable()
     {
         FillInWheelImagesData();
+        SetInteractable(true);
     }
 
-    public void OnExtraSpinButtonDown()
+    public void OnWhatchAddButtonDown()
     {
-        SetInteractable(true);
+        if(_addsViewing < 2)
+        {
+            YG2.RewardedAdvShow(RewardId, () =>
+            {
+                SetInteractable(true);
+                _addsViewing++;
+            });
+        }
+    }
+
+    public void OnPayDiamondButtonDown()
+    {
+        if (_ui.Pay(ref YG2.saves.Diamond, -5, _ui.DiamondsAmountText))
+        {
+            SetInteractable(true);
+        }
+    }
+
+    public void OnPayCoinButtonDown()
+    {
+        if (_ui.Pay(ref YG2.saves.Coin, -1, _ui.CoinAmountText))
+        {
+            SetInteractable(true);
+        }
     }
 
     public void OnLuckyWheelButtonDown()
@@ -41,6 +73,8 @@ public class LuckyWheelSimple : MonoBehaviour
 
     private IEnumerator SpinningRoutine(Transform wheel, float defaultSpeed)
     {
+        _ui.SoundController.PlaySound(SoundName.LuckyWheel.ToString());
+
         int index = GetCheatPrize();
 
         SetInteractable(false);
@@ -51,6 +85,9 @@ public class LuckyWheelSimple : MonoBehaviour
         float timeBeforeStop = (2 * distance) / defaultSpeed;
 
         yield return DefaultRotationRoutine(timeBeforeStop, defaultSpeed, 0, wheel);
+
+        
+        _ui.SoundController.PlaySound(SoundName.Win.ToString());
 
         PrizeRecieved?.Invoke(_currentPrizeName);
     }
@@ -103,7 +140,6 @@ public class LuckyWheelSimple : MonoBehaviour
             return GetCheatPrize();
         }
 
-      //  _prizeName.text = _wheelItems[randomSector].Name;
         _currentPrizeName = _wheelItems[randomSector].PrizeName;
 
         return randomSector;

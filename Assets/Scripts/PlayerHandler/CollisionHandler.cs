@@ -39,6 +39,7 @@ public class CollisionHandler : MonoBehaviour
     {
         if (other.TryGetComponent(out Pig pig))
         {
+            _player.SoundController.PlaySound(SoundName.Rabbit.ToString());
             pig.gameObject.SetActive(false);
             _player.UIHandler.OpenLuckyWheelPanel();
         }

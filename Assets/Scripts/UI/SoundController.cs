@@ -25,6 +25,7 @@ public class SoundController : MonoBehaviour
 
     public void PlaySound(string soundName)
     {
+        _soundEffectsSource.Stop();
         AudioClip clip = FindSound(soundName);
         _soundEffectsSource.PlayOneShot(clip);
     }

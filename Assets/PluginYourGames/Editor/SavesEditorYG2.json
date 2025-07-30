@@ -7,12 +7,46 @@
         false,
         false
     ],
-    "idSave": 1703,
+    "idSave": 1878,
     "Heart": 3,
-    "Diamond": 45,
-    "Coin": 14,
+    "Diamond": 9,
+    "Coin": 1,
     "CurrentPlayerViewSO": {
-        "instanceID": 0
+        "instanceID": 24078
     },
-    "AvailableViews": []
+    "AvailableViews": [
+        {
+            "instanceID": 24046
+        },
+        {
+            "instanceID": 24078
+        },
+        {
+            "instanceID": 24078
+        },
+        {
+            "instanceID": 24078
+        },
+        {
+            "instanceID": 24078
+        },
+        {
+            "instanceID": 24046
+        },
+        {
+            "instanceID": 24046
+        },
+        {
+            "instanceID": 24046
+        },
+        {
+            "instanceID": 24078
+        },
+        {
+            "instanceID": 24078
+        },
+        {
+            "instanceID": 24078
+        }
+    ]
 }

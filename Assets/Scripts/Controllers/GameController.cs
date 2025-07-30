@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    private int _spawnChance = 5;
+    private int _spawnChance = 15;
 
     private Player _player;
     private CollectablesController _collectablesController;
@@ -50,17 +50,17 @@ public class GameController : MonoBehaviour
     {
         int chance = Random.Range(0, _spawnChance);
 
-        if (chance == 0 ) _collectablesController.SpawnDiamond(posCenter);
-        else if (chance == 1) _collectablesController.SpawnCoin(posCenter);
+        if (chance < 2) _collectablesController.SpawnDiamond(posCenter);
+        else if (chance == 2) _collectablesController.SpawnCoin(posCenter);
     }
 
     private void ChooseModule(Platform platform)
     {
         int chance = Random.Range(0, _spawnChance);
 
-        if (chance == 0 ||  chance == 3) platform.SetTrampolineActive();
-        else if (chance == 1) _collectablesController.SpawnPig(_platformsController.SecondPlatform.transform.position);
-        else if (chance == 2) _collectablesController.SpawnHeart(_platformsController.SecondPlatform.transform.position);
+        if (chance < 3) platform.SetTrampolineActive();
+        else if (chance == 3) _collectablesController.SpawnPig(_platformsController.SecondPlatform.transform.position);
+        else if (chance == 4) _collectablesController.SpawnHeart(_platformsController.SecondPlatform.transform.position);
 
         platform.SetEmpty(false);
     }

@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
         _shopView.PlayerViewChanged += OnPlayerViewChanged;
     }
 
-    private void OnPlayerViewChanged(PlayerViewSO playerViewSO)
+    public void OnPlayerViewChanged(PlayerViewSO playerViewSO)
     {
         _viewHandler.InitNewView(playerViewSO);
     }

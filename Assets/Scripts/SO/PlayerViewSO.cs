@@ -9,12 +9,11 @@ public class PlayerViewSO : ScriptableObject
     [SerializeField] private Sprite _view;
     [SerializeField] private Sprite _background;
    // [SerializeField] private PlayerView _prefab;
-    [SerializeField] private Texture _viewImage;
-
+    
     public int Price =>_price;
     public string Name => _name;
     public Sprite View => _view;
     public Sprite Background => _background;
    // public PlayerView Prefab => _prefab;
-    public Texture ViewImage => _viewImage;
+
 }

@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f49211ec4e6c82419c8306ab2f49ebf, type: 3}
-  m_Name: Empty
+  m_Script: {fileID: 11500000, guid: f853b109296742d4993b587149011ca2, type: 3}
+  m_Name: DefaultViewSO
   m_EditorClassIdentifier: 
-  _weight: 1
-  _sprite: {fileID: 21300000, guid: 1880ebecc1381cc4cbd5f9e2319d7905, type: 3}
-  _name: Empty
-  _prizeName: 5
+  _price: 0
+  _name: Default
+  _view: {fileID: 21300000, guid: 0678f314789c73747b71b81ab8f8289e, type: 3}
+  _background: {fileID: 21300000, guid: a078cfc8f168cf94c91550a367b8454f, type: 3}
