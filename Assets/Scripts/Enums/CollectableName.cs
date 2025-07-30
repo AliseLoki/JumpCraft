@@ -2,6 +2,6 @@ public enum CollectableName
 {
   Diamond,
   Coin,
-  Heart,
+  Cake,
   Pig,
 }

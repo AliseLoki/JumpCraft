@@ -11,4 +11,5 @@ public enum SoundName
     LuckyWheel,
     Win,
     Rabbit,
+    No,
 }

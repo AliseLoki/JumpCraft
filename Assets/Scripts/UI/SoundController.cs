@@ -3,8 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SoundController : MonoBehaviour
-{   //разделить логику отражения и основную
-
+{   
     [SerializeField] private float _defaultSoundEffectsVolume = 0.5f;
     [SerializeField] private float _defaultBackgroundMusicVolume = 0.5f;
 

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f853b109296742d4993b587149011ca2, type: 3}
   m_Name: VikingViewSO
   m_EditorClassIdentifier: 
-  _price: 0
+  _price: 250
   _name: Viking
   _view: {fileID: 21300000, guid: 8b268e207d123f943b86ab28a188fae7, type: 3}
-  _background: {fileID: 21300000, guid: a078cfc8f168cf94c91550a367b8454f, type: 3}
+  _background: {fileID: 21300000, guid: dc2c0b47ff913184c9d9d44d3fcd8bd8, type: 3}

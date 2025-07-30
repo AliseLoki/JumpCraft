@@ -80,15 +80,15 @@ public class UIHandler : MonoBehaviour
     {
         switch (name)
         {
-            case CollectableName.Heart:
-
+            case CollectableName.Cake:
+                _soundController.PlaySound(SoundName.Cake.ToString());
+              
                 if (YG2.saves.Heart < _maxHeartAmount)
                 {
                     ChangeValue(ref YG2.saves.Heart, 1);
                     ChangeHealthView();
                 }
 
-                _soundController.PlaySound(SoundName.Cake.ToString());
                 break;
 
             case CollectableName.Diamond:
