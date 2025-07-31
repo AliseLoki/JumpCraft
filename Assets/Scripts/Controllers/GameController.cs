@@ -3,6 +3,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     private int _spawnChance = 15;
+    private int _moduleIndex = 5;
 
     private Player _player;
     private CollectablesController _collectablesController;
@@ -40,6 +41,8 @@ public class GameController : MonoBehaviour
             if (platform.IsGreen) _player.JumpHandler.TrampolineJump(_platformsController.FirstPlatform);
             else _player.JumpHandler.RedTrampolineJump(_platformsController.FirstPlatform);
         }
+
+
         // проверяем какой модуль подключить
         if (_platformsController.SecondPlatform.IsEmpty) ChooseModule(_platformsController.SecondPlatform);
 
@@ -48,20 +51,29 @@ public class GameController : MonoBehaviour
 
     private void ChooseCollectableToSpawn(Vector3 posCenter)
     {
-        int chance = Random.Range(0, _spawnChance);
+        if (_platformsController.PassedPlatformsAmount >= _moduleIndex)
+        {
 
-        if (chance < 2) _collectablesController.SpawnDiamond(posCenter);
-        else if (chance == 2) _collectablesController.SpawnCoin(posCenter);
+            int chance = Random.Range(0, _spawnChance);
+
+            if (chance < 2) _collectablesController.SpawnDiamond(posCenter);
+            else if (chance == 2) _collectablesController.SpawnCoin(posCenter);
+
+            _moduleIndex = 0;
+        }
     }
 
     private void ChooseModule(Platform platform)
     {
-        int chance = Random.Range(0, _spawnChance);
+        if (_platformsController.PassedPlatformsAmount >= _moduleIndex)
+        {
+            int chance = Random.Range(0, _spawnChance);
 
-        if (chance < 3) platform.SetTrampolineActive();
-        else if (chance == 3) _collectablesController.SpawnPig(_platformsController.SecondPlatform.transform.position);
-        else if (chance == 4) _collectablesController.SpawnHeart(_platformsController.SecondPlatform.transform.position);
-
-        platform.SetEmpty(false);
+            if (chance < 3) platform.SetTrampolineActive();
+            else if (chance == 3) _collectablesController.SpawnPig(_platformsController.SecondPlatform.transform.position);
+            else if (chance == 4) _collectablesController.SpawnHeart(_platformsController.SecondPlatform.transform.position);
+            platform.SetEmpty(false);
+            _moduleIndex = 0;
+        }
     }
 }

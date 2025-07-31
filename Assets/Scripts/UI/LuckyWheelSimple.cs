@@ -38,6 +38,12 @@ public class LuckyWheelSimple : MonoBehaviour
         SetInteractable(true);
     }
 
+    private void OnDisable()
+    {
+        _ui.SoundController.StopSound();
+        StopAllCoroutines();
+    }
+
     public void OnWhatchAddButtonDown()
     {
         if (_addsViewing < 2)

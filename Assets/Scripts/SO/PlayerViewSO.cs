@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[CreateAssetMenu(fileName = "PlayerViewSO", menuName = "Scriptable Objects/PlayerViewSO")]
+[CreateAssetMenu]
 public class PlayerViewSO : ScriptableObject
 {
     [SerializeField] private int _price;

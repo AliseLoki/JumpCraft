@@ -7,6 +7,8 @@ public class PlatformsController
     private Platform _defaultPlatform;
     private Platform _currentPlatform;
 
+    private int _spawnedPlatformsAmount;
+
     private float _minOffset = 6;
     private float _maxOffset = 9;
 
@@ -19,17 +21,13 @@ public class PlatformsController
     public Platform FirstPlatform => _firstPlatform;
     public Platform SecondPlatform => _secondPlatform;
 
+    public int PassedPlatformsAmount => _spawnedPlatformsAmount; 
+
     public PlatformsController(Transform transform, ObjectsPool pool)
     {
         _defaultPosition = transform;
         _objectsPool = pool;
     }
-
-    //public void InitDefaultPosition(Transform transform, ObjectsPool pool)
-    //{
-    //    _defaultPosition = transform;
-    //    _objectsPool = pool;
-    //}
 
     public void InitPlatforms(Platform platform)
     {
@@ -82,6 +80,7 @@ public class PlatformsController
             CalculatePlatformPos(_defaultPosition,
             CalculateRandomValue(_minOffset, _maxOffset), 0)) as Platform;
         _defaultPosition = newPlatfrorm.transform;
+        _spawnedPlatformsAmount++;
         return newPlatfrorm;
     }
 

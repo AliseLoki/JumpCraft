@@ -1,22 +1,20 @@
 {
-    "intExample": 5,
-    "strExample": "Hello!",
-    "boolExample": [
-        false,
-        false,
-        false,
-        false
-    ],
-    "idSave": 2189,
+    "idSave": 2244,
     "Heart": 2,
-    "Diamond": 0,
-    "Coin": 2,
+    "Diamond": 3,
+    "Coin": 4,
     "CurrentPlayerViewSO": {
-        "instanceID": 24056
+        "instanceID": 24020
     },
     "AvailableViews": [
         {
-            "instanceID": 24056
+            "instanceID": 0
+        },
+        {
+            "instanceID": 0
+        },
+        {
+            "instanceID": 24020
         }
     ]
 }
