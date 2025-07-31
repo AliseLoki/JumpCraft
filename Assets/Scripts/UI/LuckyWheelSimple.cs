@@ -40,12 +40,13 @@ public class LuckyWheelSimple : MonoBehaviour
 
     public void OnWhatchAddButtonDown()
     {
-        if(_addsViewing < 2)
+        if (_addsViewing < 2)
         {
             YG2.RewardedAdvShow(RewardId, () =>
             {
-                SetInteractable(true);
+                StartCoroutine(SpinningRoutine(_wheelButton.transform, _wheelSpeed));
                 _addsViewing++;
+                SetAllButtonsInteractable(false);
             });
         }
     }
@@ -54,7 +55,8 @@ public class LuckyWheelSimple : MonoBehaviour
     {
         if (_ui.Pay(ref YG2.saves.Diamond, -5, _ui.DiamondsAmountText))
         {
-            SetInteractable(true);
+            StartCoroutine(SpinningRoutine(_wheelButton.transform, _wheelSpeed));
+            SetAllButtonsInteractable(false);
         }
     }
 
@@ -62,7 +64,8 @@ public class LuckyWheelSimple : MonoBehaviour
     {
         if (_ui.Pay(ref YG2.saves.Coin, -1, _ui.CoinAmountText))
         {
-            SetInteractable(true);
+            StartCoroutine(SpinningRoutine(_wheelButton.transform, _wheelSpeed));
+            SetAllButtonsInteractable(false);
         }
     }
 
@@ -73,6 +76,8 @@ public class LuckyWheelSimple : MonoBehaviour
 
     private IEnumerator SpinningRoutine(Transform wheel, float defaultSpeed)
     {
+        SetAllButtonsInteractable(false);
+
         _ui.SoundController.PlaySound(SoundName.LuckyWheel.ToString());
 
         int index = GetCheatPrize();
@@ -90,6 +95,8 @@ public class LuckyWheelSimple : MonoBehaviour
         _ui.SoundController.PlaySound(SoundName.Win.ToString());
 
         PrizeRecieved?.Invoke(_currentPrizeName);
+
+        SetAllButtonsInteractable(true);
     }
 
     private IEnumerator DefaultRotationRoutine(float stopTime, float a, float b, Transform wheel)
@@ -143,5 +150,12 @@ public class LuckyWheelSimple : MonoBehaviour
         _currentPrizeName = _wheelItems[randomSector].PrizeName;
 
         return randomSector;
+    }
+
+    private void SetAllButtonsInteractable(bool isTrue)
+    {
+        _payCoin.interactable = isTrue;
+        _payDiamond.interactable = isTrue;
+        _whatchAdd.interactable = isTrue;
     }
 }

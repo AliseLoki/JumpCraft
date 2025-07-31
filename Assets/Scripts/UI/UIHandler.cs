@@ -219,17 +219,17 @@ public class UIHandler : MonoBehaviour
                 break;
 
             case PrizeName.Diamond1:
-                ChangeValue(ref YG2.saves.Diamond, 3);
+                ChangeValue(ref YG2.saves.Diamond, 1);
                 ShowNewValue(_diamondsAmountText, YG2.saves.Diamond);
                 break;
 
             case PrizeName.Diamond2:
-                ChangeValue(ref YG2.saves.Diamond, 6);
+                ChangeValue(ref YG2.saves.Diamond, 2);
                 ShowNewValue(_diamondsAmountText, YG2.saves.Diamond);
                 break;
 
             case PrizeName.Diamond3:
-                ChangeValue(ref YG2.saves.Diamond, 9);
+                ChangeValue(ref YG2.saves.Diamond, 5);
                 ShowNewValue(_diamondsAmountText, YG2.saves.Diamond);
                 break;
 
