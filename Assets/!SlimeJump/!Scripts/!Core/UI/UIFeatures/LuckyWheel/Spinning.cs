@@ -6,7 +6,6 @@ using UnityEngine;
 public class Spinning
 {
     private float FullCircle = 360;
-   // private float SectoreAngle = 45;
     private float _wheelSpeed = 800;
     private float _timeBeforeCheating = 1;
     private int _fullSpinningAmount = 3;
@@ -28,7 +27,7 @@ public class Spinning
 
         yield return DefaultRotationRoutine(_timeBeforeCheating, 0, _wheelSpeed, wheel);
 
-        float distance = FullCircle * _fullSpinningAmount - wheel.transform.rotation.eulerAngles.z + index * (FullCircle / wheelItems.Count);//SectoreAngle;
+        float distance = FullCircle * _fullSpinningAmount - wheel.transform.rotation.eulerAngles.z + index * (FullCircle / wheelItems.Count);
         float timeBeforeStop = (2 * distance) / _wheelSpeed;
 
         yield return DefaultRotationRoutine(timeBeforeStop, _wheelSpeed, 0, wheel);

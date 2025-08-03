@@ -17,7 +17,6 @@ public class ShopView : MonoBehaviour
     public void Init(Fabrica fabrica)
     {
         _fabrica = fabrica;
-        //עמזו ג סעאנעדוויל
         InitAllShopItems();
     }
 
@@ -30,7 +29,7 @@ public class ShopView : MonoBehaviour
         }
         else
         {
-            if (_ui.Pay(ref YG2.saves.Diamond, -playerViewSO.Price, _ui.DiamondsAmountText))
+            if (_ui.PayDiamond(-playerViewSO.Price))
             {
                 _soundController.PlaySound(SoundName.ButtonPressed.ToString());
                 PlayerViewChanged?.Invoke(playerViewSO);

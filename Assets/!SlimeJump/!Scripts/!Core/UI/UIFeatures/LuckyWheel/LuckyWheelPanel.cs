@@ -10,17 +10,21 @@ public class LuckyWheelPanel : MonoBehaviour
 
     [SerializeField] private UIHandler _ui;
 
-    [SerializeField] Button _wheelButton;
-
+    [SerializeField] Button _wheel;
     [SerializeField] Button _payCoin;
     [SerializeField] Button _payDiamond;
     [SerializeField] Button _whatchAdd;
+    [SerializeField] Button _close;
 
     [SerializeField] private List<WheelItem> _wheelItems;
     [SerializeField] private List<WheelItemSO> _wheelItemsSO;
 
     private int _addsViewing = 0;
-   
+    private int _maxAddsViewing = 2;
+
+    private int _spinPriceCoin = - 1;
+    private int _spinPriceDiamond = - 5;
+
     private Spinning _spinning;
 
     public event Action<PrizeName> PrizeRecieved;
@@ -33,61 +37,49 @@ public class LuckyWheelPanel : MonoBehaviour
     private void OnEnable()
     {
         FillInWheelImagesData();
-        SetInteractable(true);
-
+        SubscribeToButtonsEvents();
         _spinning.PrizeRecieved += OnPrizeRecieved;
     }
 
     private void OnDisable()
     {
-        _ui.SoundController.StopSound();
+        UnsubscribeFromButtonsEvents();
+        _spinning.PrizeRecieved -= OnPrizeRecieved;
         StopAllCoroutines();
+        _wheel.interactable = true;
     }
 
-    public void OnWhatchAddButtonDown()
+    private void OnWhatchAddButtonDown()
     {
-        if (_addsViewing < 2)
+        if (_addsViewing < _maxAddsViewing)
         {
             YG2.RewardedAdvShow(RewardId, () =>
             {
-               // StartCoroutine(SpinningRoutine(_wheelButton.transform, _wheelSpeed));
                 _addsViewing++;
-                SetAllButtonsInteractable(false);
+                SpinWheel();
             });
         }
     }
 
-    public void OnPayDiamondButtonDown()
+    private void OnPayDiamondButtonDown()
     {
-        if (_ui.Pay(ref YG2.saves.Diamond, -5, _ui.DiamondsAmountText))
-        {
-            //StartCoroutine(SpinningRoutine(_wheelButton.transform, _wheelSpeed));
-            SetAllButtonsInteractable(false);
-        }
+        if (_ui.PayDiamond(_spinPriceDiamond)) SpinWheel();
     }
 
-    public void OnPayCoinButtonDown()
+    private void OnPayCoinButtonDown()
     {
-        if (_ui.Pay(ref YG2.saves.Coin, -1, _ui.CoinAmountText))
-        {
-           // StartCoroutine(SpinningRoutine(_wheelButton.transform, _wheelSpeed));
-            SetAllButtonsInteractable(false);
-        }
+        if (_ui.PayCoin(_spinPriceCoin)) SpinWheel();
     }
 
-    public void OnLuckyWheelButtonDown()
+    private void OnLuckyWheelButtonDown()
     {
-        SetInteractable(false);
-        SetAllButtonsInteractable(false);
-        StartCoroutine(_spinning.SpinningRoutine(_wheelButton.transform, _wheelItems));
-        
-       
+        _wheel.interactable = false;
+        SpinWheel();
     }
 
-
-    private void SetInteractable(bool isInteractable)
+    private void OnCloseButtonDown()
     {
-        _wheelButton.interactable = isInteractable;
+        this.gameObject.SetActive(false);
     }
 
     private void FillInWheelImagesData()
@@ -111,15 +103,41 @@ public class LuckyWheelPanel : MonoBehaviour
         return _wheelItemsSO[randomIndex];
     }
 
+    private void SubscribeToButtonsEvents()
+    {
+        _wheel.onClick.AddListener(OnLuckyWheelButtonDown);
+        _whatchAdd.onClick.AddListener(OnWhatchAddButtonDown);
+        _payDiamond.onClick.AddListener(OnPayDiamondButtonDown);
+        _payCoin.onClick.AddListener(OnPayCoinButtonDown);
+        _close.onClick.AddListener(OnCloseButtonDown);
+    }
+
+    private void UnsubscribeFromButtonsEvents()
+    {
+        _wheel.onClick.RemoveAllListeners();
+        _whatchAdd.onClick.RemoveAllListeners();
+        _payDiamond.onClick.RemoveAllListeners();
+        _payCoin.onClick.RemoveAllListeners();
+        _close.onClick.RemoveAllListeners();
+    }
+
     private void SetAllButtonsInteractable(bool isTrue)
     {
         _payCoin.interactable = isTrue;
         _payDiamond.interactable = isTrue;
         _whatchAdd.interactable = isTrue;
+        _close.interactable = isTrue;
     }
 
     private void OnPrizeRecieved(PrizeName prizeName)
     {
+        SetAllButtonsInteractable(true);
         PrizeRecieved?.Invoke(prizeName);
+    }
+
+    private void SpinWheel()
+    {
+        SetAllButtonsInteractable(false);
+        StartCoroutine(_spinning.SpinningRoutine(_wheel.transform, _wheelItems));
     }
 }
