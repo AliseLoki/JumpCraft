@@ -4,7 +4,7 @@ using YG;
 
 public class StatsView : MonoBehaviour
 {
-    private const int _maxHeartAmount = 4;
+    private const int _maxHeartAmount = 3;
     private const string Leaderboard = nameof(Leaderboard);
 
     [SerializeField] private TMP_Text _diamondsAmountText;

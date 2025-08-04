@@ -77,11 +77,6 @@ public class LuckyWheelPanel : MonoBehaviour
         SpinWheel();
     }
 
-    private void OnCloseButtonDown()
-    {
-        this.gameObject.SetActive(false);
-    }
-
     private void FillInWheelImagesData()
     {
         for (int i = 0; i < _wheelItems.Count; i++)
@@ -109,7 +104,6 @@ public class LuckyWheelPanel : MonoBehaviour
         _whatchAdd.onClick.AddListener(OnWhatchAddButtonDown);
         _payDiamond.onClick.AddListener(OnPayDiamondButtonDown);
         _payCoin.onClick.AddListener(OnPayCoinButtonDown);
-        _close.onClick.AddListener(OnCloseButtonDown);
     }
 
     private void UnsubscribeFromButtonsEvents()
@@ -118,7 +112,6 @@ public class LuckyWheelPanel : MonoBehaviour
         _whatchAdd.onClick.RemoveAllListeners();
         _payDiamond.onClick.RemoveAllListeners();
         _payCoin.onClick.RemoveAllListeners();
-        _close.onClick.RemoveAllListeners();
     }
 
     private void SetAllButtonsInteractable(bool isTrue)

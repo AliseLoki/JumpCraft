@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using YG;
@@ -6,18 +5,24 @@ using YG;
 public class UIHandler : MonoBehaviour
 {
     private const int _onePrefabValue = 1;
-    private const string OpenWheel = nameof(OpenWheelTest);
+    private const string OpenWheel = nameof(OpenWheelOpen);
 
     [SerializeField] private SoundController _soundController;
 
+    [Header("Panels")]
     [SerializeField] private ShopView _shopView;
     [SerializeField] private LuckyWheelPanel _luckyWheel;
     [SerializeField] private StatsView _statsView;
     [SerializeField] private JumpPowerView _jumpPowerView;
     [SerializeField] private EducationPanel _educationPanel;
-    // на кнопку старт надо конечно  завести паузу и т д
-    [SerializeField] private Button _deleteSaves;
 
+    [Header("Buttons")]
+    [SerializeField] private Button _closeWheelButton;
+    [SerializeField] private Button _closeShopButton;
+    [SerializeField] private Button _openShopButton;
+    [SerializeField] private Button _startButton;
+   
+    [Header("TemporaryHere")]
     [SerializeField] private PlayerViewSO _kingViewSO;
 
     private Player _player;
@@ -31,41 +36,38 @@ public class UIHandler : MonoBehaviour
 
     private void OnDisable()
     {
+        UnSubscribeFromButtonsEvents();
         _gameController.ScoreController.ScoreChanged -= OnScoreChanged;
         _player.JumpHandler.JumpPowerChanged -= OnPlayerJumpPowerChanged;
         _luckyWheel.PrizeRecieved -= OnPrizeRecieved;
     }
 
-    public void DeleteSaves()
-    {
-        YG2.SetDefaultSaves();
-        YG2.SaveProgress();
-        _statsView.SetValues();
-    }
-
-    public void Init(Player player, Fabrica fabrica, GameController platformsController)
+    public void Init(Player player, Fabrica fabrica, GameController gameController)
     {
         _player = player;
-        _gameController = platformsController;
+        _gameController = gameController;
         _shopView.Init(fabrica);
         _statsView.Init(fabrica);
     }
 
-    public void OpenWheelTest()
-    {
-        _luckyWheel.gameObject.SetActive(true);
-    }
-
     public void StartGame()
     {
+        SubscribeOnButtonsEvents();
+
         SetStartButtonActive();
         _statsView.SetValues();
         _jumpPowerView.SetJumpPowerScaleAmount(0);
-        
 
         _gameController.ScoreController.ScoreChanged += OnScoreChanged;
         _player.JumpHandler.JumpPowerChanged += OnPlayerJumpPowerChanged;
         _luckyWheel.PrizeRecieved += OnPrizeRecieved;
+    }
+
+    public void OpenLuckyWheelPanel()
+    {
+        SetPause(false);
+        _openShopButton.interactable = false;
+        Invoke(OpenWheel, 0.5f);
     }
 
     public void ChangeCollectablesAmount(CollectableName name)
@@ -93,40 +95,6 @@ public class UIHandler : MonoBehaviour
         }
     }
 
-    public void OnStartButtonPressed()
-    {
-        _educationPanel.gameObject.SetActive(false);
-        //_educationText.gameObject.SetActive(false);
-        //_startButton.gameObject.SetActive(false);
-        _isGamePlaying = true;
-        _player.DisableCollider(true);
-    }
-
-    public void OpenLuckyWheelPanel()
-    {
-        _isGamePlaying = false;
-
-        Invoke(OpenWheel, 0.5f);
-    }
-
-    public void OpenShop()
-    {
-        _shopView.gameObject.SetActive(true);
-        _isGamePlaying = false;
-    }
-
-    public void CloseShop()
-    {
-        _shopView.gameObject.SetActive(false);
-        _isGamePlaying = true;
-    }
-
-    public void CloseWheel()
-    {
-        _luckyWheel.gameObject.SetActive(false);
-        _isGamePlaying = true;
-    }
-
     public bool PayCoin(int price)
     {
         if (_statsView.PayCoins(price)) return true;
@@ -139,16 +107,9 @@ public class UIHandler : MonoBehaviour
         return false;
     }
 
-    private void SetStartButtonActive()
-    {
-        _player.DisableCollider(false);
-        _isGamePlaying = false;
-        _educationPanel.gameObject.SetActive(true);
-    }
-
     private void OnPlayerJumpPowerChanged(float jumpPower)
     {
-       _jumpPowerView.ChangeJumpPowerImage(jumpPower);
+        _jumpPowerView.ChangeJumpPowerImage(jumpPower);
     }
 
     private void OnPrizeRecieved(PrizeName prizeName)
@@ -187,5 +148,65 @@ public class UIHandler : MonoBehaviour
     private void OnScoreChanged(int score)
     {
         _statsView.ChangeScore(score);
+    }
+
+    private void SubscribeOnButtonsEvents()
+    {
+        _closeWheelButton.onClick.AddListener(OnCloseWheelButtonPressed);
+        _closeShopButton.onClick.AddListener(OnCloseShopButtonPressed);
+        _openShopButton.onClick.AddListener(OnOpenShopButtonPressed);
+        _startButton.onClick.AddListener(OnStartButtonPressed);
+    }
+
+    private void UnSubscribeFromButtonsEvents()
+    {
+        _closeWheelButton.onClick.RemoveAllListeners();
+        _closeShopButton.onClick.RemoveAllListeners();
+        _openShopButton.onClick.RemoveAllListeners();
+        _startButton.onClick.RemoveAllListeners();
+    }
+
+    public void OnCloseWheelButtonPressed()
+    {
+        _luckyWheel.gameObject.SetActive(false);
+        _openShopButton.interactable = true;
+        SetPause(true);
+    }
+
+    private void OnCloseShopButtonPressed()
+    {
+        _shopView.gameObject.SetActive(false);
+        SetPause(true);
+    }
+
+    private void OnOpenShopButtonPressed()
+    {
+        SetPause(false);
+        _shopView.gameObject.SetActive(true);
+    }
+
+    private void OnStartButtonPressed()
+    {
+        _educationPanel.gameObject.SetActive(false);
+        _openShopButton.interactable = true;
+        SetPause(true);
+    }
+
+    private void SetStartButtonActive()
+    {
+        SetPause(false);
+        _openShopButton.interactable = false;
+        _educationPanel.gameObject.SetActive(true);
+    }
+
+    private void OpenWheelOpen()
+    {
+        _luckyWheel.gameObject.SetActive(true);
+    }
+
+    private void SetPause(bool isPause)
+    {
+        _isGamePlaying = isPause;
+        _player.DisableCollider(isPause);
     }
 }
