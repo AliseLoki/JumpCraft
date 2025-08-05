@@ -9,11 +9,18 @@ public class Health : MonoBehaviour
     private int _maxHealth = 3;
     private float _deathPosY = 0;
 
+    private UIHandler _ui;
+
     public event Action HealthChanged;
 
     private void Update()
     {
         if (transform.position.y < _deathPosY) CheckHealth();
+    }
+
+    public void Init(UIHandler ui)
+    {
+        _ui = ui;
     }
 
     private void CheckHealth()
@@ -22,7 +29,7 @@ public class Health : MonoBehaviour
         else Rise();
     }
 
-    public void ChangeHealth(int healthChangeValue)
+    private void ChangeHealth(int healthChangeValue)
     {
         YG2.saves.Heart = Mathf.Clamp(YG2.saves.Heart + healthChangeValue, 0, _maxHealth);
         HealthChanged?.Invoke();
@@ -37,9 +44,6 @@ public class Health : MonoBehaviour
 
     private void Die()
     {
-        YG2.SetDefaultSaves();
-        YG2.InterstitialAdvShow();
-        YG2.SaveProgress();
-        SceneManager.LoadScene(0);
+        _ui.ShowDeathPanel();     
     }
 }

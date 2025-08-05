@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
         _soundController = contr;
         _gameController = plContr;
         _ui = ui;
+        _health.Init(ui);
     }
 
     public void StartGame()

@@ -1,5 +1,5 @@
 {
-    "Heart": 2,
+    "Heart": 1,
     "Diamond": 0,
     "Coin": 0,
     "CurrentPlayerViewSO": {
@@ -8,7 +8,10 @@
     "AvailableViews": [
         {
             "instanceID": 24014
+        },
+        {
+            "instanceID": 24014
         }
     ],
-    "idSave": 2378
+    "idSave": 2390
 }

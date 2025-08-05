@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using YG;
 
@@ -15,12 +16,14 @@ public class UIHandler : MonoBehaviour
     [SerializeField] private StatsView _statsView;
     [SerializeField] private JumpPowerView _jumpPowerView;
     [SerializeField] private EducationPanel _educationPanel;
+    [SerializeField] private Transform _deathPanel;
 
     [Header("Buttons")]
     [SerializeField] private Button _closeWheelButton;
     [SerializeField] private Button _closeShopButton;
     [SerializeField] private Button _openShopButton;
     [SerializeField] private Button _startButton;
+    [SerializeField] private Button _tryAgainButton;
    
     [Header("TemporaryHere")]
     [SerializeField] private PlayerViewSO _kingViewSO;
@@ -70,6 +73,14 @@ public class UIHandler : MonoBehaviour
         Invoke(OpenWheel, 0.5f);
     }
 
+    public void ShowDeathPanel()
+    {
+        SetPause(false);
+        _openShopButton.interactable = false;
+        _deathPanel.gameObject.SetActive(true);
+        Time.timeScale = 0;
+    }
+
     public void ChangeCollectablesAmount(CollectableName name)
     {
         switch (name)
@@ -105,6 +116,17 @@ public class UIHandler : MonoBehaviour
     {
         if (_statsView.PayDiamonds(price)) return true;
         return false;
+    }
+
+    private void OnTryAgainButtonPressed()
+    {
+        _deathPanel.gameObject.SetActive(false);
+        YG2.SetDefaultSaves();
+        YG2.InterstitialAdvShow();
+        YG2.SaveProgress();
+        SceneManager.LoadScene(0);
+        Time.timeScale = 1;
+        _openShopButton.interactable = true;
     }
 
     private void OnPlayerJumpPowerChanged(float jumpPower)
@@ -156,6 +178,7 @@ public class UIHandler : MonoBehaviour
         _closeShopButton.onClick.AddListener(OnCloseShopButtonPressed);
         _openShopButton.onClick.AddListener(OnOpenShopButtonPressed);
         _startButton.onClick.AddListener(OnStartButtonPressed);
+        _tryAgainButton.onClick.AddListener(OnTryAgainButtonPressed);
     }
 
     private void UnSubscribeFromButtonsEvents()
@@ -164,6 +187,7 @@ public class UIHandler : MonoBehaviour
         _closeShopButton.onClick.RemoveAllListeners();
         _openShopButton.onClick.RemoveAllListeners();
         _startButton.onClick.RemoveAllListeners();
+        _tryAgainButton.onClick.RemoveAllListeners();
     }
 
     public void OnCloseWheelButtonPressed()
