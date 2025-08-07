@@ -51,7 +51,14 @@ public class StatsView : MonoBehaviour
 
     public void ChangeScore(int score)
     {
-        YG2.SetLeaderboard(Leaderboard, score);
+        YG2.saves.Score = score;
+        YG2.SaveProgress();
+
+        if (score > YG2.saves.Score)
+        {
+            YG2.SetLeaderboard(Leaderboard, score);
+        }
+       
         ShowNewValue(_scoreText, score);
     }
 
